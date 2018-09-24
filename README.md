@@ -2,5 +2,5 @@
 Projects for myself<br>
 <br>
 Contents:<br>
-<pre>java/jars/Mj.jar<br>
-<pre><pre>Mahjong Calculator and Examer.<br>
+&emsp;java/jars/Mj.jar<br>
+&emsp;&emsp;Mahjong Calculator and Examer.<br>
