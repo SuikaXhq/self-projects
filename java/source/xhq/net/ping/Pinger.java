@@ -10,78 +10,44 @@ import java.text.*;
 
 public class Pinger 
 {
-	Double ptg;
-	Double send;
-	Double receive;
-	JButton start;
-	JButton stop;
-	JLabel ptgout;
+	public void static Pattern PATTERN = Pattern.compile("(\\d+ms)(\\s+)(TTL=\\d+)",Pattern.CASE_INSENSITIVE);
 	String ip;
-	JTextField ipin;
-	JTextArea results;
-	Runtime rt;
+	Runtime rt = Runtime.getRuntime();
 	BufferedReader in;
 	String command;
 	String result;
-	java.util.Timer timer=new java.util.Timer();
-	TimerTask timerTask;
-	static Pattern pattern = Pattern.compile("(\\d+ms)(\\s+)(TTL=\\d+)",Pattern.CASE_INSENSITIVE);
+	String temp = null;
 	Matcher matcher;
 	DecimalFormat df=new DecimalFormat("0.00%");
-	PingerStarter pst;
 
 	public Pinger(){
-		ptg=0.0;
-		send=0.0;
-		receive=0.0;
 	}
 
 	public void startPing(){
-		results.setText("");
-		send=0.0;
-		receive=0.0;
-		ptg=0.0;
 		ip=ipin.getText();
 		pst.saveIp(this);
 		command="ping "+ip+" -n 1";
-		rt=Runtime.getRuntime();
-		timerTask=new TimerTask() {
-            public void run() {
-				result=ping();
-				results.append(result+"\r\n");
-				results.setCaretPosition(results.getText().length());
-				send++;
-				if (send!=0)
-				{
-					ptg=(send-receive)/send;
-					ptgout.setText(df.format(ptg));
-				}
-			}
-		};
 		timer.scheduleAtFixedRate(timerTask,0,1000);
 	}
 
 	public String ping(){
-		String str=null;
-		in = null;  
-        rt = Runtime.getRuntime();
+		in = null;
 		try{
-			Process p = rt.exec(command);
-			if (p==null)
-			{
+			Process process = rt.exec(command);
+			if (process == null) {
 				return "´íÎó001";
-			}else{
-				in=new BufferedReader(new InputStreamReader(p.getInputStream()));
-				str=in.readLine();
-				while(str!=null){
-					matcher = pattern.matcher(str);
+			} else {
+				in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				temp = in.readLine();
+				while(temp != null){
+					matcher = PATTERN.matcher(temp);
 					while (matcher.find()) {
 						receive++;
-						return str;
+						return temp;
 					}
-					str=in.readLine();
+					temp = in.readLine();
 				}
-			}//endif
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -93,21 +59,5 @@ public class Pinger
 		timer.purge();
 	}
 
-	public class StartListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent a){
-			startPing();
-			start.setEnabled(false);
-			stop.setEnabled(true);
-		}
-	}
-
-	public class StopListener implements ActionListener
-	{
-		public void actionPerformed(ActionEvent a){
-			stopPing();
-			stop.setEnabled(false);
-			start.setEnabled(true);
-		}
-	}
+	
 }
