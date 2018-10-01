@@ -9,7 +9,7 @@ public class PingerHelper
 	Gui gui;
 	Pinger pinger;
 	ConfigManager manager;
-	
+	DecimalFormat df=new DecimalFormat("0.00%");
 	
 
 	public static void main(String[] args) 
