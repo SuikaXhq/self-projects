@@ -26,15 +26,22 @@ public class FilePathTester
 	}
 
 	public void go() throws Exception {
-		System.out.println(this.getClass().getProtectionDomain().getCodeSource().getLocation());
-		BufferedReader bfr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/DefaultIp.txt")));
-		System.out.println(bfr.readLine());
-		bfr.close();
-		JarOutputStream jarStream = new JarOutputStream(new FileOutputStream(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()));
+		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		File file = new File(path.substring(1,path.lastIndexOf("/")) + "/res/DefaultIp.txt");
+		System.out.println(file.isFile());
+//		System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
+//		System.out.println(this.getClass().getResource("/").getPath());
+//		System.out.println(this.getClass().getResource(".").getPath());
+//		System.out.println(this.getClass().getResource("").getPath());
+
+//		BufferedReader bfr = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("./resource/ping/DefaultIp.txt")));
+//		System.out.println(bfr.readLine());
+//		bfr.close();
+/*		JarOutputStream jarStream = new JarOutputStream(new FileOutputStream(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()));
 		JarEntry txt = new JarEntry("DefaultIp.txt");
 		jarStream.putNextEntry(txt);
 		BufferedWriter bfw = new BufferedWriter(new OutputStreamWriter(jarStream));
 		bfw.write("123456");
-		bfw.close();
+		bfw.close();*/
 	}
 }
