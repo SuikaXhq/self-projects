@@ -6,8 +6,7 @@ import java.util.*;
 
 public class PingerHelper
 {
-	public final static DecimalFormat FORMAT=new DecimalFormat("0.00%");
-	private Pinger pinger_;
+	
 	private ConfigManager manager_;
 	private ArrayList<IPBox> iPBoxs_ = new ArrayList<IPBox>();
 	private ArrayList<String> iPs_;
@@ -43,7 +42,7 @@ public class PingerHelper
 		try {
 			pinger_ = new Pinger();
 			manager_ = new ConfigManager();
-			iPs_ = manager.read();
+			iPs_ = manager.readAll();
 			IPBox tempBox = null;
 			for (int i = 0;i < iPs_.size();i++) {
 				tempBox = new IPBox(ip);
@@ -60,28 +59,35 @@ public class PingerHelper
 		}
 	}
 
+	//±£´æIP
+	public void saveIP(int index) {
+
+	}
+
 	//ÕìÌýÆ÷
 	public class StartListener implements ActionListener
 	{
-		private final int index_;
+		private final int INDEX_;
 
 		public StartListener(int i) {
-			index_ = i;
+			INDEX_ = i;
 		}
 
 		public void actionPerformed(ActionEvent a) {
-/*			results.setText("");
-			pinger.startPing();
-			gui.start.setEnabled(false);
-			gui.stop.setEnabled(true);
-*/		}
+			if (!iPBoxs_.get(INDEX_).isIPFieldChanged()) {
+				saveIP(INDEX_);
+				iPBoxs_.get(INDEX_).loadIP();
+				iPBoxs_.get(INDEX_).turnOff();
+			}
+			iPBoxs_.get(INDEX_).startPing();
+		}
 	}
 	public class StopListener implements ActionListener
 	{
 		private final int index_;
 
 		public StopListener(int i) {
-			index_ = i;
+			INDEX_ = i;
 		}
 
 		public void actionPerformed(ActionEvent a) {

@@ -9,6 +9,7 @@ public class ConfigManager
 	private BufferedWriter writer_;
 	private String bufferedOutput_;
 	private File file_;
+	private ArrayList<String> outputStrings_ = new ArrayList<String>();
 
 	//txt文件位于jar包同目录下res/中
 	public ConfigManager() throws Exception {
@@ -19,9 +20,16 @@ public class ConfigManager
 		writer_ = new BufferedWriter(new FileWriter(file_));
 	}
 
+	//替换一行
+	public void change(int index,String content) {
+		if (index < outputStrings_.size())
+			outputStrings_.set(index,content);
+	}
+
 	//添加一行
-	public void appendln(String str) {
-		bufferedOutput_ += str + "\r\n";
+	public void append(int index,String content) {
+		if (index == outputStrings_.size())
+			outputStrings_.add(content);
 	}
 
 	//写入
@@ -32,15 +40,15 @@ public class ConfigManager
 	}
 
 	//读取
-	public ArrayList<String> read() throws IOException {
+	public ArrayList<String> readAll() throws IOException {
 		String newString = null;
-		ArrayList<String> iPs = new ArrayList<String>();
 		while ((newString = reader_.readLine()) != null) {
-			iPs.add(newString);
+			outputStrings_.add(newString);
 		}
-		return iPs;
+		return outputStrings_;
 	}
 
+/*
 	//关闭输出流
 	public void closeWriter() throws IOException {
 		writer_.close();
@@ -50,6 +58,5 @@ public class ConfigManager
 	public void closeReader() throws IOException {
 		reader_.close();
 	}
-
-	
+*/
 }
