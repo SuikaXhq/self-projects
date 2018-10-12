@@ -13,13 +13,19 @@ public class ConfigManager
 	private BufferedReader reader_;
 	private BufferedWriter writer_;
 	private File file_;
+	private File res_;
 //	private ArrayList<String> outputStrings_ = new ArrayList<String>();
 
 	//txt文件位于jar包同目录下res/DefaultIp.txt
 	public ConfigManager() throws Exception {
-		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		path = path.substring(1,path.lastIndexOf("/")) + "/res/DefaultIp.txt";
-		file_ = new File(path);
+		String path1 = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+		String path2 = path1.substring(1,path1.lastIndexOf("/")) + "/res";
+		path1 = path1.substring(1,path1.lastIndexOf("/")) + "/res/DefaultIp.txt";
+		file_ = new File(path1);
+		res_ = new File(path2);
+		if (!res_.exists()) {
+			res_.mkdir();
+		}
 	}
 
 /*
@@ -52,8 +58,8 @@ public class ConfigManager
 	//读取
 	public ArrayList<String> readAll() throws IOException {
 		ArrayList<String> inputStrings_ = new ArrayList<String>();
-		reader_ = new BufferedReader(new FileReader(file_));
 		if (!file_.createNewFile()) {
+			reader_ = new BufferedReader(new FileReader(file_));
 			String newString = null;
 			int left = 0;
 			int right = 0;
@@ -74,10 +80,10 @@ public class ConfigManager
 					break;
 				}
 			}
+			reader_.close();
 		}
 		if (inputStrings_.size() == 0)
 			inputStrings_.add("");
-		reader_.close();
 		return inputStrings_;
 	}
 

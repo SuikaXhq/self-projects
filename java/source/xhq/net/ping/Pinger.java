@@ -11,7 +11,6 @@ public class Pinger
 	private BufferedReader reader_;
 	private String command_;
 	private Process tempProcess_;
-	private String answer_;
 	private String tempString_ = null;
 	private Matcher matcher_;
 

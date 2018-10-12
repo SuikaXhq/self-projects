@@ -2,3 +2,4 @@
 2.Text变更用DocumentListener侦听
 3.正则表达式Matcher注意添加位置
 4.Writer连接时会覆盖原文件
+5.文件夹用File.mkdir()创建，文件用creatNewFile()创建

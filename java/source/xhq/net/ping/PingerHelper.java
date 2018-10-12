@@ -1,21 +1,18 @@
 package xhq.net.ping;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.util.regex.*;
 
-public class PingerHelper
-{
-	
+public class PingerHelper {
+
 	private ConfigManager manager_;
 	private ArrayList<IPBox> iPBoxs_ = new ArrayList<IPBox>();
 	private ArrayList<String> iPs_;
-	private JFrame frame_;//主框架
-	private Box backBox_;//主背景
+	private JFrame frame_;// 主框架
+	private Box backBox_;// 主背景
 
-	//菜单
+	// 菜单
 	private JMenuBar menuBar_ = new JMenuBar();
 	private JMenu editMenu_ = new JMenu("编辑");
 	private JMenuItem plusOption_ = new JMenuItem("添加");
@@ -23,14 +20,13 @@ public class PingerHelper
 	public static void main(String[] args) {
 		try {
 			new PingerHelper().initialize();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	//构造函数（GUI）
+	// 构造函数（GUI）
 	public PingerHelper() {
 		frame_ = new JFrame("Ping");
 		backBox_ = new Box(BoxLayout.X_AXIS);
@@ -42,7 +38,7 @@ public class PingerHelper
 		frame_.setJMenuBar(menuBar_);
 	}
 
-	//初始化（IPBox）
+	// 初始化（IPBox）
 	public void initialize() {
 		try {
 			manager_ = new ConfigManager();
@@ -51,16 +47,15 @@ public class PingerHelper
 				addIPBox_(ip);
 			}
 			iPBoxs_.get(0).setDeleteButtonDisabled();
-			frame_.setBounds(150,150,18 + 350 * iPs_.size(),320);
+			frame_.setBounds(150, 150, 18 + 350 * iPs_.size(), 320);
 			frame_.setResizable(false);
 			frame_.setVisible(true);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	//添加IPBox
+	// 添加IPBox
 	private void addIPBox_(String ip) {
 		IPBox tempBox = new IPBox(ip);
 		iPBoxs_.add(tempBox);
@@ -70,20 +65,18 @@ public class PingerHelper
 		backBox_.add(tempBox.getBox());
 	}
 
-	//保存IP
+	// 保存IP
 	private void saveIP_() {
 		try {
 			manager_.write(iPs_);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 //侦听器
-	public class StartListener implements ActionListener
-	{
+	public class StartListener implements ActionListener {
 		private int index_;
 
 		public StartListener(int i) {
@@ -107,8 +100,8 @@ public class PingerHelper
 			}
 		}
 	}
-	public class StopListener implements ActionListener
-	{
+
+	public class StopListener implements ActionListener {
 		private int index_;
 
 		public StopListener(int i) {
@@ -124,18 +117,17 @@ public class PingerHelper
 		}
 	}
 
-	public class PlusListener implements ActionListener
-	{
+	public class PlusListener implements ActionListener {
 		public void actionPerformed(ActionEvent a) {
 			addIPBox_("");
 			iPs_.add("");
-			frame_.setSize(18 + 350 * iPs_.size(), (int)frame_.getSize().getHeight());
+			frame_.setSize(18 + 350 * iPs_.size(), (int) frame_.getSize().getHeight());
 			frame_.validate();
 			frame_.repaint();
 		}
 	}
-	public class DeleteListener implements ActionListener
-	{
+
+	public class DeleteListener implements ActionListener {
 		private int index_;
 
 		public DeleteListener(int i) {
@@ -151,13 +143,12 @@ public class PingerHelper
 			backBox_.remove(iPBoxs_.get(index_).getBox());
 			iPBoxs_.remove(index_);
 			iPs_.remove(index_);
-			frame_.setSize(18 + 350 * iPs_.size(), (int)frame_.getSize().getHeight());
+			frame_.setSize(18 + 350 * iPs_.size(), (int) frame_.getSize().getHeight());
 			frame_.validate();
-			for (int i = index_; i < iPBoxs_.size(); ++i)
-			{
-				((StartListener)iPBoxs_.get(i).getStartListener()).shift();
-				((StopListener)iPBoxs_.get(i).getStopListener()).shift();
-				((DeleteListener)iPBoxs_.get(i).getDeleteListener()).shift();
+			for (int i = index_; i < iPBoxs_.size(); ++i) {
+				((StartListener) iPBoxs_.get(i).getStartListener()).shift();
+				((StopListener) iPBoxs_.get(i).getStopListener()).shift();
+				((DeleteListener) iPBoxs_.get(i).getDeleteListener()).shift();
 			}
 			saveIP_();
 		}
