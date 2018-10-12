@@ -1,13 +1,13 @@
 # self-projects
 Projects for myself  
-JAVA���µ���������repo
+JAVA萌新的自娱自乐repo
 
 ## Contents:
 * java/jars/Mj.jar
-һ���򵥵��齫��һɫ��������������ϰ����
-> ��ҪJRE1.8
+一个简单的麻将清一色算听器和算听练习器。
+> 需要JRE1.8
 * java/jars/Ping.jar
-һ���򵥵Ķ�IPͬ��ping���ߣ������洢IP���ܡ�
-> ��ҪJRE10����Windows������  
-> �洢IP��txt�ļ�Ϊjar��ͬ��Ŀ¼��res/DefaultIP.txt  
-> ��֪bug�����ӹ��ര�ڵ��³�����Ļʱ�Ῠס
+一个简单的多IP同步ping工具，附带存储IP功能。
+> 需要JRE1.8并在Windows下运行  
+> 存储IP的txt文件为jar包同级目录的res/DefaultIP.txt  
+> 已知bug：添加过多窗口导致超出屏幕时会卡住
