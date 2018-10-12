@@ -40,7 +40,7 @@ public class Pinger
 				in = new BufferedReader(new InputStreamReader(process.getInputStream()));
 				temp = in.readLine();
 				while(temp != null){
-					matcher = PATTERN.matcher(temp);
+					matcher_ = PATTERN.matcher(temp);
 					while (matcher.find()) {
 						receive++;
 						return temp;

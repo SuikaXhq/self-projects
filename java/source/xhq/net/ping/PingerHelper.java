@@ -2,7 +2,9 @@ package xhq.net.ping;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
+import java.util.regex.*;
 
 public class PingerHelper
 {
@@ -14,13 +16,18 @@ public class PingerHelper
 	private Box backBox_;//主背景
 
 	//菜单
-	private JMenuBar menuBar_;
+	private JMenuBar menuBar_ = new JMenuBar();
 	private JMenu editMenu_ = new JMenu("编辑");
-	private JMenuItem plusOption_ = new JMenuItem("添加一个");
-	private JMenuItem minusOption_ = new JMenuItem("删除一个");
+	private JMenuItem plusOption_ = new JMenuItem("添加");
 
 	public static void main(String[] args) {
-		new PingerHelper().initialize();
+		try {
+			new PingerHelper().initialize();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	//构造函数（GUI）
@@ -29,29 +36,23 @@ public class PingerHelper
 		backBox_ = new Box(BoxLayout.X_AXIS);
 		frame_.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		plusOption_.addActionListener(new PlusListener());
-		minusOption_.addActionListener(new MinusListener());
 		editMenu_.add(plusOption_);
-		editMenu_.add(minusOption_);
 		menuBar_.add(editMenu_);
 		frame_.add(backBox_);
-		frame_.add(menuBar_);
+		frame_.setJMenuBar(menuBar_);
 	}
 
 	//初始化（IPBox）
 	public void initialize() {
 		try {
-			pinger_ = new Pinger();
 			manager_ = new ConfigManager();
-			iPs_ = manager.readAll();
-			IPBox tempBox = null;
-			for (int i = 0;i < iPs_.size();i++) {
-				tempBox = new IPBox(ip);
-				iPBoxs_.add(tempBox);
-				tempBox.addStartListener(new StartListener(i));
-				tempBox.addStopListener(new StopListener(i));
-				backBox_.add(tempBox);
+			iPs_ = manager_.readAll();
+			for (String ip : iPs_) {
+				addIPBox_(ip);
 			}
-			frame_.setBounds(150,150,400 * iPs_.size(),300);
+			iPBoxs_.get(0).setDeleteButtonDisabled();
+			frame_.setBounds(150,150,18 + 350 * iPs_.size(),320);
+			frame_.setResizable(false);
 			frame_.setVisible(true);
 		}
 		catch (Exception e) {
@@ -59,51 +60,106 @@ public class PingerHelper
 		}
 	}
 
-	//保存IP
-	public void saveIP(int index) {
-
+	//添加IPBox
+	private void addIPBox_(String ip) {
+		IPBox tempBox = new IPBox(ip);
+		iPBoxs_.add(tempBox);
+		tempBox.addStartListener(new StartListener(iPBoxs_.size() - 1));
+		tempBox.addStopListener(new StopListener(iPBoxs_.size() - 1));
+		tempBox.addDeleteListener(new DeleteListener(iPBoxs_.size() - 1));
+		backBox_.add(tempBox.getBox());
 	}
 
-	//侦听器
+	//保存IP
+	private void saveIP_() {
+		try {
+			manager_.write(iPs_);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+//侦听器
 	public class StartListener implements ActionListener
 	{
-		private final int INDEX_;
+		private int index_;
 
 		public StartListener(int i) {
-			INDEX_ = i;
+			index_ = i;
+		}
+
+		public void shift() {
+			--index_;
 		}
 
 		public void actionPerformed(ActionEvent a) {
-			if (!iPBoxs_.get(INDEX_).isIPFieldChanged()) {
-				saveIP(INDEX_);
-				iPBoxs_.get(INDEX_).loadIP();
-				iPBoxs_.get(INDEX_).turnOff();
+			if (manager_.isIP(iPBoxs_.get(index_).getIP())) {
+				if (iPBoxs_.get(index_).isIPFieldChanged()) {
+					iPBoxs_.get(index_).loadIP();
+					iPs_.set(index_, iPBoxs_.get(index_).getIP());
+					saveIP_();
+				}
+				iPBoxs_.get(index_).startPing();
+			} else {
+				JOptionPane.showMessageDialog(null, "输入值非IP!", "错误", JOptionPane.ERROR_MESSAGE);
 			}
-			iPBoxs_.get(INDEX_).startPing();
 		}
 	}
 	public class StopListener implements ActionListener
 	{
-		private final int index_;
+		private int index_;
 
 		public StopListener(int i) {
-			INDEX_ = i;
+			index_ = i;
+		}
+
+		public void shift() {
+			--index_;
 		}
 
 		public void actionPerformed(ActionEvent a) {
-/*			pinger.stopPing();
-			gui.stop.setEnabled(false);
-			gui.start.setEnabled(true);
-*/		}
+			iPBoxs_.get(index_).stopPing();
+		}
 	}
+
 	public class PlusListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent a) {
+			addIPBox_("");
+			iPs_.add("");
+			frame_.setSize(18 + 350 * iPs_.size(), (int)frame_.getSize().getHeight());
+			frame_.validate();
+			frame_.repaint();
 		}
 	}
-	public class MinusListener implements ActionListener
+	public class DeleteListener implements ActionListener
 	{
+		private int index_;
+
+		public DeleteListener(int i) {
+			index_ = i;
+		}
+
+		public void shift() {
+			--index_;
+		}
+
 		public void actionPerformed(ActionEvent a) {
+			iPBoxs_.get(index_).close();
+			backBox_.remove(iPBoxs_.get(index_).getBox());
+			iPBoxs_.remove(index_);
+			iPs_.remove(index_);
+			frame_.setSize(18 + 350 * iPs_.size(), (int)frame_.getSize().getHeight());
+			frame_.validate();
+			for (int i = index_; i < iPBoxs_.size(); ++i)
+			{
+				((StartListener)iPBoxs_.get(i).getStartListener()).shift();
+				((StopListener)iPBoxs_.get(i).getStopListener()).shift();
+				((DeleteListener)iPBoxs_.get(i).getDeleteListener()).shift();
+			}
+			saveIP_();
 		}
 	}
 }

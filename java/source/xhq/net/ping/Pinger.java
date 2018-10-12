@@ -5,7 +5,7 @@ import java.util.regex.*;
 
 public class Pinger 
 {
-	public final static Pattern PATTERN = Pattern.compile("(\\d+ms)(\\s+)(TTL=\\d+)",Pattern.CASE_INSENSITIVE);
+	public final static Pattern RESPONSE_PATTERN = Pattern.compile("(\\d+ms)(\\s+)(TTL=\\d+)",Pattern.CASE_INSENSITIVE);
 	private String ip_;
 	private Runtime runtime_ = Runtime.getRuntime();
 	private BufferedReader reader_;
@@ -16,27 +16,39 @@ public class Pinger
 	private Matcher matcher_;
 
 	public Pinger(String ip) {
+		matcher_ = RESPONSE_PATTERN.matcher("");
 		ip_ = ip;
 		command_ = "ping " + ip_ + " -n 1";
 	}
 
+	public String getIP() {
+		return ip_;
+	}
+
 	public String ping() {
-		reader_ = null;
 		try {
 			tempProcess_ = runtime_.exec(command_);
 			if (tempProcess_ != null) {
 				reader_ = new BufferedReader(new InputStreamReader(tempProcess_.getInputStream()));
-				tempString_ = reader_.readLine();
-				matcher_ = PATTERN.matcher(tempString_);
-				matcher_.find() ? return tempString_ : return "³¬Ê±";
+				while ((tempString_ = reader_.readLine()) != null) {
+					matcher_ = matcher_.reset(tempString_);
+					if (matcher_.find())
+						return tempString_;
+				}
+				reader_.close();
+				reader_ = null;
+				return "³¬Ê±";
 			} else {
-				return "´íÎó001";
+				reader_.close();
+				reader_ = null;
+				return "Error 001";
 			}
-			reader_.close();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			reader_ = null;
 		}
+		return "Error 002";
 	}
 
 	public void loadIP(String ip) {

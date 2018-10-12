@@ -1,2 +1,2 @@
-store.steampowered.com
-210.140.40.78
+1:	127.0.0.1
+2:	

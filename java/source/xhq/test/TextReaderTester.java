@@ -1,6 +1,7 @@
 package xhq.test;
 
 import java.io.*;
+import java.util.regex.*;
 
 public class TextReaderTester 
 {

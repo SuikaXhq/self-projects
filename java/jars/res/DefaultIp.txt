@@ -1,2 +1,3 @@
-store.steampowered.com
-210.140.40.78
+1:	store.steampowered.com
+2:	www.baidu.com
+3:	

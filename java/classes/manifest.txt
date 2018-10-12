@@ -1,1 +1,1 @@
-Main-Class: xhq.test.FilePathTester
+Main-Class: xhq.net.ping.PingerHelper

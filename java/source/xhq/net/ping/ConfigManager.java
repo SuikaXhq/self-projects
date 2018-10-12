@@ -1,51 +1,90 @@
 package xhq.net.ping;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.regex.*;
 
 public class ConfigManager
 {
+	public final static Pattern CONFIG_PATTERN = Pattern.compile("\\d+:\\t",Pattern.CASE_INSENSITIVE);
+	public final static Pattern IP_PATTERN = Pattern.compile("[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)*",Pattern.CASE_INSENSITIVE);
+	private Matcher configMatcher_;
+	private Matcher iPMatcher_;
 	private BufferedReader reader_;
 	private BufferedWriter writer_;
-	private String bufferedOutput_;
 	private File file_;
-	private ArrayList<String> outputStrings_ = new ArrayList<String>();
+//	private ArrayList<String> outputStrings_ = new ArrayList<String>();
 
-	//txt文件位于jar包同目录下res/中
+	//txt文件位于jar包同目录下res/DefaultIp.txt
 	public ConfigManager() throws Exception {
 		String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.substring(1,path.lastIndexOf("/")) + "/res/DefaultIp.txt";
 		file_ = new File(path);
-		reader_ = new BufferedReader(new FileReader(file_));
-		writer_ = new BufferedWriter(new FileWriter(file_));
+	}
+
+/*
+	//替换所有
+	public void changeAll(ArrayList<String> arr) {
+		outputStrings_ = arr;
 	}
 
 	//替换一行
-	public void change(int index,String content) {
+	public void changeLine(int index, String content) {
 		if (index < outputStrings_.size())
 			outputStrings_.set(index,content);
 	}
 
 	//添加一行
-	public void append(int index,String content) {
-		if (index == outputStrings_.size())
-			outputStrings_.add(content);
+	public void append(String content) {
+		outputStrings_.add(content);
 	}
+*/
 
 	//写入
-	public void write() throws IOException {
-		writer_.write(bufferedOutput_);
+	public void write(ArrayList<String> arr) throws IOException {
+		writer_ = new BufferedWriter(new FileWriter(file_));
+		for (int i = 0;i < arr.size();i++)
+			writer_.write((i + 1) + ":\t" + arr.get(i) + "\r\n");//输出config格式
 		writer_.flush();
-		bufferedOutput_ = "";
+		writer_.close();
 	}
 
 	//读取
 	public ArrayList<String> readAll() throws IOException {
-		String newString = null;
-		while ((newString = reader_.readLine()) != null) {
-			outputStrings_.add(newString);
+		ArrayList<String> inputStrings_ = new ArrayList<String>();
+		reader_ = new BufferedReader(new FileReader(file_));
+		if (!file_.createNewFile()) {
+			String newString = null;
+			int left = 0;
+			int right = 0;
+			configMatcher_ = CONFIG_PATTERN.matcher("");
+			iPMatcher_ = IP_PATTERN.matcher("");
+			while ((newString = reader_.readLine()) != null) {
+				configMatcher_ = configMatcher_.reset(newString);//查找config格式，找不到则视为无关内容，与空文件一样对待
+				if (configMatcher_.find()) {
+					left = configMatcher_.end();
+					iPMatcher_ = iPMatcher_.reset(newString);//查找IP，找不到合法域名则用空字符串代替
+					if (iPMatcher_.find(left)) {
+						right = iPMatcher_.end();
+						inputStrings_.add(newString.substring(left, right));//仅存储IP
+					} else {
+						inputStrings_.add("");
+					}
+				} else {
+					break;
+				}
+			}
 		}
-		return outputStrings_;
+		if (inputStrings_.size() == 0)
+			inputStrings_.add("");
+		reader_.close();
+		return inputStrings_;
+	}
+
+	//IP格式判断器
+	public boolean isIP(String ip) {
+		iPMatcher_.reset(ip);
+		return iPMatcher_.find();
 	}
 
 /*
