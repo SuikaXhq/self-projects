@@ -1,0 +1,8 @@
+# LOG
+*.log
+
+# JAVA
+classes/
+jars/res
+resource/
+*.class
