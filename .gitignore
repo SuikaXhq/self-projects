@@ -3,6 +3,6 @@
 
 # JAVA
 classes/
-jars/res
+jars/res/
 resource/
 *.class
