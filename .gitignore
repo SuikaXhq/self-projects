@@ -6,3 +6,7 @@ classes/
 jars/res/
 resource/
 *.class
+
+/.classpath
+
+/.project
