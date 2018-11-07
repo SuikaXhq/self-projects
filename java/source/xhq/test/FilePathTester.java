@@ -1,3 +1,8 @@
+/*
+ * 文件目录结构测试器
+ * **用于测试不同方法获取路径
+ */
+
 package xhq.test;
 
 import java.io.*;

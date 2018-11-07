@@ -1,3 +1,7 @@
+/*
+ * 正则表达式测试器
+ */
+
 package xhq.test;
 
 import java.util.regex.*;

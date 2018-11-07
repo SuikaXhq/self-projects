@@ -1,3 +1,8 @@
+/*
+ * ÅÅĞòËã·¨xhq.common.Sorter²âÊÔÆ÷
+ * ***ÒÑ·ÏÆú***
+ */
+
 package xhq.test;
 
 import xhq.common.Sorter;

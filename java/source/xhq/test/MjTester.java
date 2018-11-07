@@ -1,3 +1,9 @@
+/*
+ * ËãÌıËã·¨²âÊÔÆ÷
+ * ***ÒÑ·ÏÆú***
+ */
+
+
 package xhq.test;
 
 import xhq.mahjong.*;

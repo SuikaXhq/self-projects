@@ -1,3 +1,7 @@
+/*
+ * TXTÎÄ¼ş¶ÁĞ´²âÊÔÆ÷
+ */
+
 package xhq.test;
 
 import java.io.*;
