@@ -1,3 +1,9 @@
+/*
+ * 含进制转换的长整型类
+ * 未实现：minus(), multiply(), divide(), mod()
+ * 未解决：高于十进制下的toString()
+ */
+
 package xhq.math;
 
 public class BasedInteger {
@@ -78,13 +84,21 @@ public class BasedInteger {
 	public String toString() {
 		if (valueInBase10_ == 0)
 			return "0";
-		String temp = "";
+		StringBuffer temp = new StringBuffer();
 		long tempValue = valueInBase10_;
-		while (tempValue != 0) {
-			temp += tempValue % base_;
-			tempValue /= base_;
+		if (tempValue > 0) {
+			while (tempValue != 0) {
+				temp.insert(0, tempValue % base_);
+				tempValue /= base_;
+			}
+		} else {
+			while (tempValue != 0) {
+				temp.insert(0, -tempValue % base_);
+				tempValue /= base_;
+			}
+			temp.insert(0, '-');
 		}
-		return temp;
+		return temp.toString();
 	}
 	public static BasedInteger add(BasedInteger bInt1, BasedInteger bInt2) {
 		int base1 = bInt1.getBase();
