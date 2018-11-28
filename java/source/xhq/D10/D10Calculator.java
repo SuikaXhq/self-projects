@@ -2,6 +2,7 @@
  * 解决杰哥的D10四则运算结果尾数概率问题
  * Ver0.0.1
  */
+
 package xhq.D10;
 
 import java.text.DecimalFormat;
@@ -63,7 +64,7 @@ public class D10Calculator {
 		for (int i = 0; i <= 10; i++)
 			results[i] = 0;
 		modes_.clear();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			switch (frame.lists[i].getSelectedIndex()) {
 			case 0:
 				modes_.add('+');
@@ -78,7 +79,7 @@ public class D10Calculator {
 				modes_.add('/');
 				break;
 			case 4: case -1:
-				i = 5;
+				i = 4;
 				break;
 			}
 		}
