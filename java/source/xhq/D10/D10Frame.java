@@ -1,3 +1,7 @@
+/*
+ * 解决杰哥的D10四则运算结果尾数概率问题
+ * Ver0.0.1
+ */
 package xhq.D10;
 
 import java.awt.BorderLayout;
