@@ -32,8 +32,14 @@ public class FilePathTester
 
 	public void go() throws Exception {
 		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-		File file = new File(path.substring(1,path.lastIndexOf("/")) + "/res/DefaultIp.txt");
+		File file = new File("D:\\123.txt");
+		file.createNewFile();
 		System.out.println(file.isFile());
+		System.out.println(file);
+		System.out.println(path);
+//		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+//		File file = new File(path.substring(1,path.lastIndexOf("/")) + "/res/DefaultIp.txt");
+//		System.out.println(file.isFile());
 //		System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
 //		System.out.println(this.getClass().getResource("/").getPath());
 //		System.out.println(this.getClass().getResource(".").getPath());
