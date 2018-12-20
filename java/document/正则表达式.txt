@@ -118,3 +118,7 @@ Back 引用
 (?<=X) 	X，通过零宽度的正 lookbehind
 (?<!X) 	X，通过零宽度的负 lookbehind
 (?>X) 	X，作为独立的非捕获组
+
+-----------------------------------------------------
+Matcher:
+可通过Pattern对象的matcher(String)方法获取，重利用时调用reset(String)，调用find()
