@@ -1,7 +1,10 @@
 /*
  * Class LogAnalyzer
- * Version 0.0.2
+ * Version 0.0.2.1
  * Feature: 重复利用式的qq消息分析器，用于统计特定的字符串
+ * 
+ * Ver0.0.2.1 12/22 Updated:
+ * 		- 紧急修复：查找字段将区分大小写
  * 
  * Ver0.0.2 12/21 Updated:
  * 		- 提供日期范围支持
@@ -46,7 +49,7 @@ public class LogAnalyzer
 		 * 		finding - 所要查找的内容
 		 */
 		
-		findingPattern_ = Pattern.compile(finding, Pattern.CASE_INSENSITIVE);
+		findingPattern_ = Pattern.compile(finding);
 		finder_ = findingPattern_.matcher("");
 		manager_ = new TextManager(file, TextManager.READ);
 	}
@@ -155,17 +158,18 @@ public class LogAnalyzer
 					case DEFAULT_MODE:
 						marker = true;
 						messageSum++;
-						if (nameMatcher_.group(QQ_GROUP).equals(QQBook.shm.getQQ()))
+						String qq = nameMatcher_.group(QQ_GROUP);
+						if (qq.equals(QQBook.shm.getQQ()))
 							name = 0;
-						else if (nameMatcher_.group(QQ_GROUP).equals(QQBook.sjx.getQQ()))
+						else if (qq.equals(QQBook.sjx.getQQ()))
 							name = 1;
-						else if (nameMatcher_.group(QQ_GROUP).equals(QQBook.nhx.getQQ()))
+						else if (qq.equals(QQBook.nhx.getQQ()))
 							name = 2;
-						else if (nameMatcher_.group(QQ_GROUP).equals(QQBook.xhq.getQQ()))
+						else if (qq.equals(QQBook.xhq.getQQ()))
 							name = 3;
-						else if (nameMatcher_.group(QQ_GROUP).equals(QQBook.njh.getQQ()))
+						else if (qq.equals(QQBook.njh.getQQ()))
 							name = 4;
-						else if (nameMatcher_.group(QQ_GROUP).equals(QQBook.ycx.getQQ()))
+						else if (qq.equals(QQBook.ycx.getQQ()))
 							name = 5;
 						totalMessageCount[name]++;
 						break;
@@ -193,7 +197,7 @@ public class LogAnalyzer
 		 * 		file - 更换的目标文件。
 		 * 		finding - 更换的字段。
 		 */
-		findingPattern_ = Pattern.compile(finding, Pattern.CASE_INSENSITIVE);
+		findingPattern_ = Pattern.compile(finding);
 		finder_ = findingPattern_.matcher("");
 		manager_ = new TextManager(file, TextManager.READ);
 	}
