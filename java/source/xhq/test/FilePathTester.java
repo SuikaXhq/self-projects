@@ -33,9 +33,9 @@ public class FilePathTester
 	public void go() throws Exception {
 		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		File file = new File("D:\\123.txt");
-		file.createNewFile();
+//		file.createNewFile();
 		System.out.println(file.isFile());
-		System.out.println(file);
+		System.out.println(file.getPath());
 		System.out.println(path);
 //		String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 //		File file = new File(path.substring(1,path.lastIndexOf("/")) + "/res/DefaultIp.txt");
