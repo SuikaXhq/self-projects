@@ -1,7 +1,10 @@
-/*
+/**
  * Class LogAnalyzer
- * Version 0.0.2.1
+ * Version 0.0.3
  * Feature: 重复利用式的qq消息分析器，用于统计特定的字符串
+ * 
+ * Ver0.0.3 12/23 Updated:
+ * 		- 加入净发言数的返回值
  * 
  * Ver0.0.2.1 12/22 Updated:
  * 		- 紧急修复：查找字段将区分大小写
@@ -9,6 +12,8 @@
  * Ver0.0.2 12/21 Updated:
  * 		- 提供日期范围支持
  * 		- 提供切换文件支持
+ * 
+ * TODO: 优化算法（第一次读取时将消息分类存储）
  */
 
 package xhq.suviet;
@@ -21,6 +26,7 @@ public class LogAnalyzer
 {
 	public static final Pattern NAME_PATTERN = Pattern.compile("^(([0-9]{4,})-([0-9]{1,2})-([0-9]{1,2}))\\s[0-9]{1,2}\\:[0-9]{1,2}\\:[0-9]{1,2}\\s(.+)[\\(\\<]([0-9a-zA-Z_@\\.]+)[\\)\\>]$",Pattern.CASE_INSENSITIVE);
 	public static final Pattern DATE_PATTERN = Pattern.compile("^(([0-9]{4,})-([0-9]{1,2})-([0-9]{1,2}))",Pattern.CASE_INSENSITIVE);
+	public static final Pattern PICTURE_PATTERN = Pattern.compile("^\\[[\\u4e00-\\u9fa5]+\\]$",Pattern.CASE_INSENSITIVE);
 	public static final int DEFAULT_MODE = 0;
 	public static final int DATE_MODE = 1;
 	private static final int DATE_GROUP = 1;
@@ -32,9 +38,11 @@ public class LogAnalyzer
 	private Matcher nameMatcher_ = NAME_PATTERN.matcher("");
 	private int[] messageCount = new int[6];//0-shm 1-sjx 2-nhx 3-xhq 4-njh 5-ycx
 	private int[] totalMessageCount = new int[6];
+	private int[] pictureMessageCount = new int[6];
 	private Pattern findingPattern_;
 	private TextManager manager_;
 	private Matcher finder_;
+	private Matcher pictureFinder_;
 	private String[] dateRange_;
 	private int mode_ = DEFAULT_MODE;
 	
@@ -51,6 +59,7 @@ public class LogAnalyzer
 		
 		findingPattern_ = Pattern.compile(finding);
 		finder_ = findingPattern_.matcher("");
+		pictureFinder_ = PICTURE_PATTERN.matcher("");
 		manager_ = new TextManager(file, TextManager.READ);
 	}
 	LogAnalyzer() {
@@ -104,18 +113,22 @@ public class LogAnalyzer
 	}
 	public int[][] analyze() {
 		/**
-		 * 12/21 Ver0.0.1
+		 * 12/23 Ver0.0.2
 		 * 
 		 * 	 根据此对象的文件和查找字段进行分析，并返回一个结果数组。
 		 * 
 		 * Return:
-		 * 		int[][] - 一个结果数组，格式为{ 成员发言中找到的字段数 int[n], 成员总发言数 int[n], 全员总发言量int[1]}，其中n为成员数。
+		 * 		int[][] - 一个结果数组，格式为{ 成员发言中找到的字段数 int[n], 成员总发言数 int[n], 成员净发言数int[n], 全员总发言量int[1]}，其中n为成员数。
 		 * 
-		 * TODO:将适用范围扩展到任意群消息文件
+		 * 12/23 Updated:
+		 * 		- 加入净发言数。（除纯图片外的发言数）
+		 * 
+		 * TODO:将适用范围扩展到任意群消息文件、优化算法
 		 */
 		
 		messageCount = new int[6];
 		totalMessageCount = new int[6];
+		pictureMessageCount = new int[6];
 		String temp;
 		boolean marker = false;//指示上一行是否是名字行
 		boolean dateMarker = false;
@@ -125,6 +138,11 @@ public class LogAnalyzer
 		//统计
 		while (!manager_.isEnd()) {
 			temp = manager_.readLine();
+			
+			if (temp.equals("")) {
+				marker = false;
+				continue;
+			}
 			
 			//跳过时间范围外的消息(仅限DATE_MODE)
 			if (!dateMarker && mode_ == DATE_MODE) {
@@ -143,8 +161,13 @@ public class LogAnalyzer
 			//读取消息并记录
 			if (marker) {
 				marker = false;
-				finder_.reset(temp);
-				while (finder_.find())messageCount[name]++;
+				pictureFinder_.reset(temp);
+				if (pictureFinder_.find()) {
+					pictureMessageCount[name]++;
+				} else {
+					finder_.reset(temp);
+					while (finder_.find())messageCount[name]++;
+				}
 			} else {
 				nameMatcher_.reset(temp);
 				if (nameMatcher_.find()) {
@@ -184,7 +207,12 @@ public class LogAnalyzer
 			if (mode_ == DATE_MODE && !dateMarker)break;
 		}//end while
 		
-		int[][] result = {messageCount, totalMessageCount, {messageSum}};
+		int[] netMessageCount = totalMessageCount.clone();
+		for (int i = 0; i < 6; i++) {
+			netMessageCount[i] -= pictureMessageCount[i];
+		}
+		
+		int[][] result = {messageCount, totalMessageCount, netMessageCount, {messageSum}};
 		return result;
 	}
 	public void reset(File file, String finding) {
@@ -199,6 +227,7 @@ public class LogAnalyzer
 		 */
 		findingPattern_ = Pattern.compile(finding);
 		finder_ = findingPattern_.matcher("");
+		pictureFinder_ = PICTURE_PATTERN.matcher("");
 		manager_ = new TextManager(file, TextManager.READ);
 	}
 	public String[] getDateRange() {

@@ -1,7 +1,10 @@
-/*
+/**
  * Class SuvietLauncher
- * Version 0.0.2
+ * Version 0.0.3
  * Feature: 输入查找的词，返回次数、消息总数及每个人的详细情况
+ * 
+ * Ver0.0.3 12/23 Updated:
+ * 		- 加入净发言数的返回值
  * 
  * Ver0.0.2 12/21 Updated:
  * 		- 支持切换文件
@@ -63,13 +66,13 @@ public class SuvietLauncher {
 			}
 			
 			String resultStr = "查找字：" + finding + "\n结果：\n";
-			resultStr += "shm: " + result[0][0] + " / " + result[1][0] + "\n";
-			resultStr += "sjx: " + result[0][1] + " / " + result[1][1] + "\n";
-			resultStr += "nhx: " + result[0][2] + " / " + result[1][2] + "\n";
-			resultStr += "xhq: " + result[0][3] + " / " + result[1][3] + "\n";
-			resultStr += "njh: " + result[0][4] + " / " + result[1][4] + "\n";
-			resultStr += "ycx: " + result[0][5] + " / " + result[1][5] + "\n";
-			resultStr += "总计" + result[2][0] + "条消息。\n用时：" + (stopTime - startTime) + "ms。";
+			resultStr += "shm: " + result[0][0] + " / " + result[2][0] + " / " + result[1][0] + "\n";
+			resultStr += "sjx: " + result[0][1] + " / " + result[2][1] + " / " + result[1][1] + "\n";
+			resultStr += "nhx: " + result[0][2] + " / " + result[2][2] + " / " + result[1][2] + "\n";
+			resultStr += "xhq: " + result[0][3] + " / " + result[2][3] + " / " + result[1][3] + "\n";
+			resultStr += "njh: " + result[0][4] + " / " + result[2][4] + " / " + result[1][4] + "\n";
+			resultStr += "ycx: " + result[0][5] + " / " + result[2][5] + " / " + result[1][5] + "\n";
+			resultStr += "总计" + result[3][0] + "条消息。\n用时：" + (stopTime - startTime) + "ms。";
 			frame_.addText(resultStr);
 			
 		} catch (Exception e) {
