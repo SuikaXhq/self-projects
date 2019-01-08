@@ -36,7 +36,7 @@ public class Pinger
 				}
 				reader_.close();
 				reader_ = null;
-				return "³¬Ê±";
+				return "è¶…æ—¶";
 			} else {
 				reader_.close();
 				reader_ = null;

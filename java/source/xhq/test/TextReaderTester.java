@@ -1,5 +1,5 @@
 /*
- * TXTÎÄ¼þ¶ÁÐ´²âÊÔÆ÷
+ * TXTæ–‡ä»¶è¯»å†™æµ‹è¯•å™¨
  */
 
 package xhq.test;
@@ -11,7 +11,7 @@ public class TextReaderTester
 {
 	public static void main(String[] args) 
 	{
-		try//ÓÃmatcherºÍpattern
+		try//ç”¨matcherå’Œpattern
 		{
 			File file = new File("TextTest.txt");
 			BufferedReader reader = new BufferedReader(new FileReader(file));

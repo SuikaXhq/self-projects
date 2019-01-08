@@ -9,13 +9,13 @@ public class PingerHelper {
 	private ConfigManager manager_;
 	private ArrayList<IPBox> iPBoxs_ = new ArrayList<IPBox>();
 	private ArrayList<String> iPs_;
-	private JFrame frame_;// Ö÷¿ò¼Ü
-	private Box backBox_;// Ö÷±³¾°
+	private JFrame frame_;// ä¸»æ¡†æ¶
+	private Box backBox_;// ä¸»èƒŒæ™¯
 
-	// ²Ëµ¥
+	// èœå•
 	private JMenuBar menuBar_ = new JMenuBar();
-	private JMenu editMenu_ = new JMenu("±à¼­");
-	private JMenuItem plusOption_ = new JMenuItem("Ìí¼Ó");
+	private JMenu editMenu_ = new JMenu("ç¼–è¾‘");
+	private JMenuItem plusOption_ = new JMenuItem("æ·»åŠ ");
 
 	public static void main(String[] args) {
 		try {
@@ -26,7 +26,7 @@ public class PingerHelper {
 
 	}
 
-	// ¹¹Ôìº¯Êı£¨GUI£©
+	// æ„é€ å‡½æ•°ï¼ˆGUIï¼‰
 	public PingerHelper() {
 		frame_ = new JFrame("Ping");
 		backBox_ = new Box(BoxLayout.X_AXIS);
@@ -38,7 +38,7 @@ public class PingerHelper {
 		frame_.setJMenuBar(menuBar_);
 	}
 
-	// ³õÊ¼»¯£¨IPBox£©
+	// åˆå§‹åŒ–ï¼ˆIPBoxï¼‰
 	public void initialize() {
 		try {
 			manager_ = new ConfigManager();
@@ -55,7 +55,7 @@ public class PingerHelper {
 		}
 	}
 
-	// Ìí¼ÓIPBox
+	// æ·»åŠ IPBox
 	private void addIPBox_(String ip) {
 		IPBox tempBox = new IPBox(ip);
 		iPBoxs_.add(tempBox);
@@ -65,7 +65,7 @@ public class PingerHelper {
 		backBox_.add(tempBox.getBox());
 	}
 
-	// ±£´æIP
+	// ä¿å­˜IP
 	private void saveIP_() {
 		try {
 			manager_.write(iPs_);
@@ -75,7 +75,7 @@ public class PingerHelper {
 
 	}
 
-//ÕìÌıÆ÷
+//ä¾¦å¬å™¨
 	public class StartListener implements ActionListener {
 		private int index_;
 
@@ -96,7 +96,7 @@ public class PingerHelper {
 				}
 				iPBoxs_.get(index_).startPing();
 			} else {
-				JOptionPane.showMessageDialog(null, "ÊäÈëÖµ·ÇIP!", "´íÎó", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "è¾“å…¥å€¼éIP!", "é”™è¯¯", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

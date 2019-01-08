@@ -2,9 +2,9 @@
  * Expression Calculator
  * Ver0.0.1
  * 
- * ���룺����ʽ�ַ���
- * ��������
- * ֧�֣�( ) + - * /
+ * 输入：表达式字符串
+ * 输出：结果
+ * 支持：( ) + - * /
  */
 
 package xhq.math;

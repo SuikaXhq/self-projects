@@ -1,5 +1,5 @@
 /*
- *  ÎÊÌâ£ºÇåÒ»É«ÌıÅÆÊÇ·ñÄÜ±é¼°ËùÓĞÌıÅÆ×éºÏ
+ *  é—®é¢˜ï¼šæ¸…ä¸€è‰²å¬ç‰Œæ˜¯å¦èƒ½éåŠæ‰€æœ‰å¬ç‰Œç»„åˆ
  */
 
 package xhq.test;
@@ -19,30 +19,30 @@ public class MjProblemTester
 			TenPaiCalculator calculator = new TenPaiCalculator();
 			TenPaiResult result = null;
 			int temp = 0;
-			int comb = 5*5*5*5*5*5*5*5*5;//ÓÃÎå½øÖÆ±íÊ¾×éºÏ
-			ArrayList<Integer> combList = new ArrayList<Integer>();//ÅäÅÆ×éºÏ
-			ArrayList<TenPaiResult> tenPaiList = new ArrayList<TenPaiResult>();//ÌıÅÆ×éºÏ
-			HashMap<TenPaiResult, Hand> resultMap = new HashMap<TenPaiResult, Hand>();//Êä³ömap
+			int comb = 5*5*5*5*5*5*5*5*5;//ç”¨äº”è¿›åˆ¶è¡¨ç¤ºç»„åˆ
+			ArrayList<Integer> combList = new ArrayList<Integer>();//é…ç‰Œç»„åˆ
+			ArrayList<TenPaiResult> tenPaiList = new ArrayList<TenPaiResult>();//å¬ç‰Œç»„åˆ
+			HashMap<TenPaiResult, Hand> resultMap = new HashMap<TenPaiResult, Hand>();//è¾“å‡ºmap
 			
-			for (int i = 0; i < comb; i++)//Éú³ÉÅäÅÆ×éºÏ
-				if (check(i)) {//ÌŞ³ı²»·ûºÏ×éºÏ£¬·ûºÏ¾Í¼ÓÈë
+			for (int i = 0; i < comb; i++)//ç”Ÿæˆé…ç‰Œç»„åˆ
+				if (check(i)) {//å‰”é™¤ä¸ç¬¦åˆç»„åˆï¼Œç¬¦åˆå°±åŠ å…¥
 					combList.add(i);
 				}
-			for (int i = 1; i < (1 << 10); i++)//Éú³ÉÌıÅÆ×éºÏ
+			for (int i = 1; i < (1 << 10); i++)//ç”Ÿæˆå¬ç‰Œç»„åˆ
 				tenPaiList.add(new TenPaiResult(i));
 			
 			ArrayList<Integer> resultList = null;
 			for (int i : combList) {
 				hand = parseToHand(i);
 				if (!(resultList = calculator.getTenPai(hand)).isEmpty()) {
-					//ÈôÌıÅÆÔòÊä³ö
+					//è‹¥å¬ç‰Œåˆ™è¾“å‡º
 					result = new TenPaiResult(resultList);
 					if (!resultMap.containsKey(result))
 						resultMap.put(result, hand);
 				}
 			}
 			
-			//Êä³ö
+			//è¾“å‡º
 			for (TenPaiResult r:tenPaiList) {
 				resultWriter.write(r.toString() + ": ");
 				if (resultMap.containsKey(r))
@@ -56,7 +56,7 @@ public class MjProblemTester
 		}
 	}
 	private static Hand parseToHand(int i) {
-		//½âÎö×éºÏÎªHand
+		//è§£æç»„åˆä¸ºHand
 		HashMap<Integer,Integer> temp = new HashMap<Integer,Integer>();
 		for (int index = 1;index <= 9;index++)
 		{
@@ -72,7 +72,7 @@ public class MjProblemTester
 	}
 	
 	private static boolean check(int i) {
-		//¼ì²éÊÇ·ñÎª13ÕÅ
+		//æ£€æŸ¥æ˜¯å¦ä¸º13å¼ 
 		int temp = 0;
 		while (i != 0) {
 			temp += i % 5;

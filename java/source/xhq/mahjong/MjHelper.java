@@ -11,10 +11,10 @@ public class MjHelper
 	private MjMountain mjm;
 	private Hand handCurrent;
 	private TenPaiCalculator calculator;
-	private ArrayList<Integer> handList = new ArrayList<Integer>();//Ä£Ê½1Ê¹ÓÃµÄList
+	private ArrayList<Integer> handList = new ArrayList<Integer>();//æ¨¡å¼1ä½¿ç”¨çš„List
 	private boolean[] answer = new boolean[9];
 	private boolean[] result = new boolean[9];
-	private JFrame frame = new JFrame("ÇåÒ»É«ËãÌı");
+	private JFrame frame = new JFrame("æ¸…ä¸€è‰²ç®—å¬");
 	private Box windowBox = Box.createVerticalBox();
 	private JPanel handPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,0,10));
 	private JPanel answerPanel = new JPanel();
@@ -23,32 +23,32 @@ public class MjHelper
 	private JLabel[] handLabel = new JLabel[13];
 	private JButton[] buttons = new JButton[9];
 	private ImageIcon[] pimgs = new ImageIcon[9];
-	private ImageIcon[] pimgsC = new ImageIcon[9];//Í²
+	private ImageIcon[] pimgsC = new ImageIcon[9];//ç­’
 	private ImageIcon[] mimgs = new ImageIcon[9];
-	private ImageIcon[] mimgsC = new ImageIcon[9];//Íò
+	private ImageIcon[] mimgsC = new ImageIcon[9];//ä¸‡
 	private ImageIcon[] simgs = new ImageIcon[9];
-	private ImageIcon[] simgsC = new ImageIcon[9];//Ë÷
+	private ImageIcon[] simgsC = new ImageIcon[9];//ç´¢
 	private ImageIcon[] imgs = new ImageIcon[9];
-	private ImageIcon[] imgsC = new ImageIcon[9];//µ±Ç°Íâ¹Û
+	private ImageIcon[] imgsC = new ImageIcon[9];//å½“å‰å¤–è§‚
 	private JPanel buttonPanel = new JPanel();
-	private JButton checkButton = new JButton("È·¶¨(C)");
-	private JButton nextButton = new JButton("ÏÂÒ»¸ö(N)");
-	private JButton deleteButton = new JButton("É¾³ı(D)");
-	private JButton deleteAllButton = new JButton("Çå¿Õ(A)");
-	private JMenu optionMenu = new JMenu("ÉèÖÃ");
-	private JMenu modeMenu = new JMenu("Ä£Ê½");
-	private JMenu surfaceMenu = new JMenu("Íâ¹Û");
-	private HelpFrame helpFrame = new HelpFrame("ÓÎÏ·°ïÖú");
+	private JButton checkButton = new JButton("ç¡®å®š(C)");
+	private JButton nextButton = new JButton("ä¸‹ä¸€ä¸ª(N)");
+	private JButton deleteButton = new JButton("åˆ é™¤(D)");
+	private JButton deleteAllButton = new JButton("æ¸…ç©º(A)");
+	private JMenu optionMenu = new JMenu("è®¾ç½®");
+	private JMenu modeMenu = new JMenu("æ¨¡å¼");
+	private JMenu surfaceMenu = new JMenu("å¤–è§‚");
+	private HelpFrame helpFrame = new HelpFrame("æ¸¸æˆå¸®åŠ©");
 	private JMenuItem[] surface = new JMenuItem[3];
 	private JMenuItem[] mode = new JMenuItem[2];
-	private int currentSurface = 0;//0=Í²×Ó,1=Íò×Ö,2=Ë÷×Ó
-	private int currentMode = 0;//0=ÇåÒ»É«ËãÌıÁ·Ï°,1=ÇåÒ»É«ËãÌı
-	private int handPointer = 0;//ÊäÈëÊÖÅÆÊ±µÄ¹â±êÎ»ÖÃ
+	private int currentSurface = 0;//0=ç­’å­,1=ä¸‡å­—,2=ç´¢å­
+	private int currentMode = 0;//0=æ¸…ä¸€è‰²ç®—å¬ç»ƒä¹ ,1=æ¸…ä¸€è‰²ç®—å¬
+	private int handPointer = 0;//è¾“å…¥æ‰‹ç‰Œæ—¶çš„å…‰æ ‡ä½ç½®
 	private AnswerListener[] answerListener = new AnswerListener[9];
-	public static final JLabel TEN_PAI_LABEL = new JLabel("¥Æ¥ó¥Ñ¥¤£º");
-	public static final JLabel NO_TEN_LABEL = new JLabel("¥Î©`¥Æ¥ó");
-	public static final JLabel CORRECT_LABEL = new JLabel("ÕıÈ·£¡");
-	public static final JLabel WRONG_LABEL = new JLabel("´íÎó£¡");
+	public static final JLabel TEN_PAI_LABEL = new JLabel("ãƒ†ãƒ³ãƒ‘ã‚¤ï¼š");
+	public static final JLabel NO_TEN_LABEL = new JLabel("ãƒãƒ¼ãƒ†ãƒ³");
+	public static final JLabel CORRECT_LABEL = new JLabel("æ­£ç¡®ï¼");
+	public static final JLabel WRONG_LABEL = new JLabel("é”™è¯¯ï¼");
 	public static JLabel[] pai = new JLabel[9];
 
 	public MjHelper() {
@@ -59,28 +59,28 @@ public class MjHelper
 		frame.setSize(500,300);
 		frame.getContentPane().add(BorderLayout.CENTER,windowBox);
 		JMenuBar mb = new JMenuBar();
-		JMenu helpMenu = new JMenu("°ïÖú");
-		JMenuItem help = new JMenuItem("ÓÎÏ·°ïÖú");
+		JMenu helpMenu = new JMenu("å¸®åŠ©");
+		JMenuItem help = new JMenuItem("æ¸¸æˆå¸®åŠ©");
 		helpMenu.add(help);
-		help.addActionListener(new HelpListener());//ÓÎÏ·°ïÖú²Ëµ¥
-		surface[0] = new JMenuItem("Í²");
-		surface[1] = new JMenuItem("Íò");
-		surface[2] = new JMenuItem("Ë÷");
+		help.addActionListener(new HelpListener());//æ¸¸æˆå¸®åŠ©èœå•
+		surface[0] = new JMenuItem("ç­’");
+		surface[1] = new JMenuItem("ä¸‡");
+		surface[2] = new JMenuItem("ç´¢");
 		for (int i = 0;i < surface.length;i++) {
 			surfaceMenu.add(surface[i]);
 			surface[i].addActionListener(new SurfaceListener(i));
-		}//ÇåÒ»É«Íâ¹Û²Ëµ¥
-		mode[0] = new JMenuItem("ÇåÒ»É«ËãÌıÁ·Ï°");
-		mode[1] = new JMenuItem("ÇåÒ»É«ËãÌı");
+		}//æ¸…ä¸€è‰²å¤–è§‚èœå•
+		mode[0] = new JMenuItem("æ¸…ä¸€è‰²ç®—å¬ç»ƒä¹ ");
+		mode[1] = new JMenuItem("æ¸…ä¸€è‰²ç®—å¬");
 		for (int i = 0;i < mode.length;i++) {
 			modeMenu.add(mode[i]);
 			mode[i].addActionListener(new ModeListener(i));
-		}//Ä£Ê½²Ëµ¥
+		}//æ¨¡å¼èœå•
 		optionMenu.add(modeMenu);
 		optionMenu.add(surfaceMenu);
 		mb.add(optionMenu);
 		mb.add(helpMenu);
-		frame.setJMenuBar(mb);//²Ëµ¥À¸
+		frame.setJMenuBar(mb);//èœå•æ 
 		Dimension preferredSize = new Dimension(500,50);
 		resultPanel.setPreferredSize(preferredSize);
 		handPanel.setPreferredSize(preferredSize);
@@ -94,7 +94,7 @@ public class MjHelper
 		windowBox.add(answerPanel);
 		windowBox.add(buttonPanel);
 		checkButton.addActionListener(new CheckButtonListener());
-		checkButton.setMnemonic(KeyEvent.VK_C);//¿ì½İ¼ü
+		checkButton.setMnemonic(KeyEvent.VK_C);//å¿«æ·é”®
 		nextButton.addActionListener(new NextButtonListener());
 		nextButton.setMnemonic(KeyEvent.VK_N);
 		deleteButton.addActionListener(new DeleteButtonListener());
@@ -104,7 +104,7 @@ public class MjHelper
 		buttonPanel.add(checkButton);
 		buttonPanel.add(nextButton);
 		nextButton.setEnabled(false);
-		try//µ¼ÈëÍ¼Æ¬
+		try//å¯¼å…¥å›¾ç‰‡
 		{
 			for (int i = 0;i < 9;i++)
 			{
@@ -116,13 +116,13 @@ public class MjHelper
 				simgs[i] = new ImageIcon(new URL(path,(i + 1) + "s.gif"));
 				simgsC[i] = new ImageIcon(new URL(path,(i + 1) + "sC.gif"));
 				pai[i] = new JLabel(pimgs[i]);
-				buttons[i] = new JButton(pimgs[i]);//Ä¬ÈÏÍ²×ÓÍâ¹Û
+				buttons[i] = new JButton(pimgs[i]);//é»˜è®¤ç­’å­å¤–è§‚
 				buttons[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				buttons[i].setBorder(null);
 				buttons[i].setContentAreaFilled(false);
 				answerListener[i] = new AnswerListener(i);
 				buttons[i].addActionListener(answerListener[i]);
-				buttons[i].setMnemonic(49 + i);//¿ì½İ¼ü
+				buttons[i].setMnemonic(49 + i);//å¿«æ·é”®
 				answerPanel.add(buttons[i]);
 			}
 			imgs = pimgs;
@@ -143,7 +143,7 @@ public class MjHelper
 		for (int i = 0;i < 9;i++)
 		{
 			if (answer[i])
-				answerListener[i].refresh();//»¹Ô­°´Å¥
+				answerListener[i].refresh();//è¿˜åŸæŒ‰é’®
 		}
 		frame.repaint();
 	}
@@ -152,7 +152,7 @@ public class MjHelper
 		int i = 1;
 		int ih = 0;
 		for (JLabel jl:handLabel)
-			jl.setIcon(null);//Çå³ı
+			jl.setIcon(null);//æ¸…é™¤
 		while (i <= 9)
 		{
 			while (i <= 9 && handCurrent.getHand().get(i) == 0)
@@ -160,7 +160,7 @@ public class MjHelper
 			if (i <= 9)
 			{
 				for (int j = 1;j <= handCurrent.getHand().get(i);j++) {
-					handLabel[ih].setIcon(imgs[i-1]);//¹¹ÔìÊÖÅÆ
+					handLabel[ih].setIcon(imgs[i-1]);//æ„é€ æ‰‹ç‰Œ
 					ih++;
 				}
 				i++;
@@ -381,7 +381,7 @@ public class MjHelper
 					for (int i = 0;i < 9;i++)
 					{
 						if (answer[i])
-							answerListener[i].refresh();//»¹Ô­°´Å¥
+							answerListener[i].refresh();//è¿˜åŸæŒ‰é’®
 					}
 					buttonPanel.remove(nextButton);
 					buttonPanel.add(deleteButton);
@@ -402,7 +402,7 @@ public class MjHelper
 			super(title);
 			setBounds(600,400,400,150);
 			setResizable(false);
-			JLabel jl = new JLabel("<html><body>ÉÏ²¿£ºÊÖÅÆ<br>ÖĞ²¿£ºÑ¡ÔñÄãÈÏÎªµÄÌıÅÆ£¨Î´ÌıÔò²»Ñ¡Ôñ£©»òÊäÈëÊÖÅÆ<br>¿ì½İ¼üÎªalt+Êı×Ö/×ÖÄ¸<body></html>");
+			JLabel jl = new JLabel("<html><body>ä¸Šéƒ¨ï¼šæ‰‹ç‰Œ<br>ä¸­éƒ¨ï¼šé€‰æ‹©ä½ è®¤ä¸ºçš„å¬ç‰Œï¼ˆæœªå¬åˆ™ä¸é€‰æ‹©ï¼‰æˆ–è¾“å…¥æ‰‹ç‰Œ<br>å¿«æ·é”®ä¸ºalt+æ•°å­—/å­—æ¯<body></html>");
 			getContentPane().add(jl);
 		}
 	}

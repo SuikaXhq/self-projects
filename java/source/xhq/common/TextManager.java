@@ -1,10 +1,10 @@
 /*
  * Class TextManager
  * Version 0.0.3
- * Features: ²»³ÖĞøÕ¼ÓÃÎÄ¼ş£¬Ö§³ÖÊ¹ÓÃÏà¶ÔÎÄ¼şÃû
+ * Features: ä¸æŒç»­å ç”¨æ–‡ä»¶ï¼Œæ”¯æŒä½¿ç”¨ç›¸å¯¹æ–‡ä»¶å
  * 
  * Ver0.0.3 12/21 Updated:
- * 		- Ìá¹©ÇĞ»»ÎÄ¼şÖ§³Ö
+ * 		- æä¾›åˆ‡æ¢æ–‡ä»¶æ”¯æŒ
  */
 
 //TODO: APPEND MODE, WRITE MODE, MODE SWITCHER
@@ -21,24 +21,24 @@ public class TextManager {
 	private File file_;
 	private BufferedWriter appendWriter_;
 	private BufferedWriter rewriter_;
-	private StringBuffer content_;//ÄÚÈİ
+	private StringBuffer content_;//å†…å®¹
 	private ArrayList<String> contentLines_;
-	private int cursor;//¹â±ê, Ö¸Ê¾ÉÏÒ»´Î¶ÁÈ¡µÄĞĞË÷Òı
-	private int currentMode;//Ö¸Ê¾µ±Ç°Ä£Ê½
+	private int cursor;//å…‰æ ‡, æŒ‡ç¤ºä¸Šä¸€æ¬¡è¯»å–çš„è¡Œç´¢å¼•
+	private int currentMode;//æŒ‡ç¤ºå½“å‰æ¨¡å¼
 	
 	public TextManager(File file, int mark) {
 		/**
 		 * 12/19 Ver0.0.1
 		 * 
-		 * 	¸ù¾İfile²ÎÊı¸ø¶¨µÄFileÀà´´½¨Ò»¸öTextManagerÊµÀı½øĞĞ²Ù×÷£º
-		 * 		READ - Ö»¶ÁÇÒµ¥ĞĞ¶ÁÈ¡
-		 * 		APPEND - ÔÚÎÄ¼şÄ©Î²Ìí¼Ó
-		 * 		WRITE - ¸²¸ÇĞ´ÈëĞÂÎÄ¼ş
-		 * 		DEFAULT - ÉÏÊöÈıÖÖ²Ù×÷¶¼¿ÉÊ¹ÓÃ
+		 * 	æ ¹æ®fileå‚æ•°ç»™å®šçš„Fileç±»åˆ›å»ºä¸€ä¸ªTextManagerå®ä¾‹è¿›è¡Œæ“ä½œï¼š
+		 * 		READ - åªè¯»ä¸”å•è¡Œè¯»å–
+		 * 		APPEND - åœ¨æ–‡ä»¶æœ«å°¾æ·»åŠ 
+		 * 		WRITE - è¦†ç›–å†™å…¥æ–°æ–‡ä»¶
+		 * 		DEFAULT - ä¸Šè¿°ä¸‰ç§æ“ä½œéƒ½å¯ä½¿ç”¨
 		 * 
 		 * Parameter:
-		 * 		file - Òª²Ù×÷µÄFileÀàĞÍ¡£
-		 * 		mark - Ä£Ê½²ÎÊı£¬ÊÇÏÂÁĞ×Ö¶ÎÖ®Ò»£ºREAD, APPEND, WRITE, DEFAULT¡£
+		 * 		file - è¦æ“ä½œçš„Fileç±»å‹ã€‚
+		 * 		mark - æ¨¡å¼å‚æ•°ï¼Œæ˜¯ä¸‹åˆ—å­—æ®µä¹‹ä¸€ï¼šREAD, APPEND, WRITE, DEFAULTã€‚
 		 */
 		
 		currentMode = mark;
@@ -48,19 +48,19 @@ public class TextManager {
 		/**
 		 * 12/19 Ver0.0.1
 		 * 
-		 * 	¸ù¾İname¸ø¶¨µÄÏà¶ÔÎÄ¼şÃû´´½¨Ò»¸öTextManagerÊµÀı½øĞĞ²Ù×÷£º
-		 * 		Ïê¼ûTextManager(File, int)
+		 * 	æ ¹æ®nameç»™å®šçš„ç›¸å¯¹æ–‡ä»¶ååˆ›å»ºä¸€ä¸ªTextManagerå®ä¾‹è¿›è¡Œæ“ä½œï¼š
+		 * 		è¯¦è§TextManager(File, int)
 		 * 
 		 * Parameter:
-		 * 		name - Ïà¶ÔÓÚjar°üµ±Ç°Ä¿Â¼µÄÂ·¾¶¡£
-		 * 		mark - Ä£Ê½²ÎÊı£¬ÊÇÏÂÁĞ×Ö¶ÎÖ®Ò»£ºREAD, APPEND, WRITE, DEFAULT¡£
+		 * 		name - ç›¸å¯¹äºjaråŒ…å½“å‰ç›®å½•çš„è·¯å¾„ã€‚
+		 * 		mark - æ¨¡å¼å‚æ•°ï¼Œæ˜¯ä¸‹åˆ—å­—æ®µä¹‹ä¸€ï¼šREAD, APPEND, WRITE, DEFAULTã€‚
 		 */
 		
 		currentMode = mark;
 		changeFile(name);
 	}
 	
-	//³õÊ¼»¯·½·¨
+	//åˆå§‹åŒ–æ–¹æ³•
 	private void writeInitialize_() throws IOException{
 		rewriter_ = new BufferedWriter(new FileWriter(file_));
 	}
@@ -87,24 +87,24 @@ public class TextManager {
 		return currentMode == mode || currentMode == DEFAULT;
 	}
 	
-	//¸ü»»²Ù×÷ÖĞÎÄ¼ş
+	//æ›´æ¢æ“ä½œä¸­æ–‡ä»¶
 	public boolean changeFile(File file) {
 		/**
 		 * 12/21 Ver0.0.1
 		 * 
-		 * 	¸ù¾İfile¸ø¶¨µÄFile¶ÔÏó¸ü»»¸ÃTextManager²Ù×÷ÖĞµÄÎÄ¼ş£¬
-		 * 	Èç¹ûfileÓëµ±Ç°²Ù×÷ÖĞµÄÎÄ¼şÏàÍ¬Ôò²»½øĞĞ¸ü»»²¢·µ»Øtrue¡£
-		 * 	ÈôfileÓë²Ù×÷ÖĞÎÄ¼ş²»Í¬Ôòµ±ÇÒ½öµ±¸ü»»³É¹¦·µ»Øtrue£¬¸ü»»Ê§°Ü·µ»Øfalse¡£
+		 * 	æ ¹æ®fileç»™å®šçš„Fileå¯¹è±¡æ›´æ¢è¯¥TextManageræ“ä½œä¸­çš„æ–‡ä»¶ï¼Œ
+		 * 	å¦‚æœfileä¸å½“å‰æ“ä½œä¸­çš„æ–‡ä»¶ç›¸åŒåˆ™ä¸è¿›è¡Œæ›´æ¢å¹¶è¿”å›trueã€‚
+		 * 	è‹¥fileä¸æ“ä½œä¸­æ–‡ä»¶ä¸åŒåˆ™å½“ä¸”ä»…å½“æ›´æ¢æˆåŠŸè¿”å›trueï¼Œæ›´æ¢å¤±è´¥è¿”å›falseã€‚
 		 * 
 		 * Parameter:
-		 * 		file - ½«Òª¸ü»»µÄÄ¿±êÎÄ¼ş
+		 * 		file - å°†è¦æ›´æ¢çš„ç›®æ ‡æ–‡ä»¶
 		 */
 
 		try {
 			if (file == file_)return true;
 			file_ = file;
 			
-			//È·±£ÎÄ¼ş¼°ËùÓĞ¸¸Ä¿Â¼´æÔÚ
+			//ç¡®ä¿æ–‡ä»¶åŠæ‰€æœ‰çˆ¶ç›®å½•å­˜åœ¨
 			String filePath = file.getPath();
 			filePath = filePath.substring(0, filePath.lastIndexOf('\\'));
 			File folder = new File(filePath);
@@ -138,14 +138,14 @@ public class TextManager {
 		/**
 		 * 12/21 Ver0.0.1
 		 * 
-		 * 	¸ù¾İfileName¸ø¶¨µÄÏà¶ÔÓÚ³ÌĞò¸ùÄ¿Â¼µÄÂ·¾¶¸ü»»²Ù×÷ÖĞµÄÎÄ¼ş¡£
-		 * 			Ïê¼ûchangeFile(File)
+		 * 	æ ¹æ®fileNameç»™å®šçš„ç›¸å¯¹äºç¨‹åºæ ¹ç›®å½•çš„è·¯å¾„æ›´æ¢æ“ä½œä¸­çš„æ–‡ä»¶ã€‚
+		 * 			è¯¦è§changeFile(File)
 		 * 
 		 * Parameter:
-		 * 		fileName - Ä¿±êÎÄ¼şÏà¶ÔÓÚ³ÌĞò¸ùÄ¿Â¼µÄÂ·¾¶
+		 * 		fileName - ç›®æ ‡æ–‡ä»¶ç›¸å¯¹äºç¨‹åºæ ¹ç›®å½•çš„è·¯å¾„
 		 */
 		
-		//»ñÈ¡µ±Ç°jar°üÄ¿Â¼
+		//è·å–å½“å‰jaråŒ…ç›®å½•
 		String classPath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		classPath = classPath.substring(1,classPath.lastIndexOf('/'));
 		String filePath = classPath + '/' + fileName;
@@ -156,11 +156,11 @@ public class TextManager {
 	public boolean isEnd() {
 		/**
 		 * 
-		 * 	ÔÚµ¥ĞĞ¶ÁÈ¡Ä£Ê½ÏÂ£¬È·ÈÏÊÇ·ñ¶Áµ½ÎÄ¼şÄ©Î²¡£
+		 * 	åœ¨å•è¡Œè¯»å–æ¨¡å¼ä¸‹ï¼Œç¡®è®¤æ˜¯å¦è¯»åˆ°æ–‡ä»¶æœ«å°¾ã€‚
 		 * 
 		 * Returns: 
-		 * 		READ»òDEFAULTÄ£Ê½ÏÂ£¬µ±ÇÒ½öµ±¶ÁÈ¡µ½Ä©Î²Ê±·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
-		 * 		ÆäËûÄ£Ê½ÏÂ£¬·µ»Øtrue¡£
+		 * 		READæˆ–DEFAULTæ¨¡å¼ä¸‹ï¼Œå½“ä¸”ä»…å½“è¯»å–åˆ°æœ«å°¾æ—¶è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
+		 * 		å…¶ä»–æ¨¡å¼ä¸‹ï¼Œè¿”å›trueã€‚
 		 */
 		
 		if (checkMode_(READ))
@@ -170,11 +170,11 @@ public class TextManager {
 	public String readLine() {
 		/**
 		 * 
-		 * 	¶ÁÈ¡ÏÂÒ»ĞĞ×Ö·û¡£
+		 * 	è¯»å–ä¸‹ä¸€è¡Œå­—ç¬¦ã€‚
 		 * 
 		 * Returns: 
-		 * 		READ»òDEFAULTÄ£Ê½ÏÂ£¬ÈôÎ´µÖ´ïÎÄ¼şÄ©Î²£¬·µ»ØÏÂÒ»ĞĞ×Ö·û´®£¨²»º¬ÓĞ»»ĞĞ·û£©£¬·ñÔò·µ»Ønull¡£
-		 * 		ÆäËûÄ£Ê½ÏÂ£¬·µ»Ønull¡£
+		 * 		READæˆ–DEFAULTæ¨¡å¼ä¸‹ï¼Œè‹¥æœªæŠµè¾¾æ–‡ä»¶æœ«å°¾ï¼Œè¿”å›ä¸‹ä¸€è¡Œå­—ç¬¦ä¸²ï¼ˆä¸å«æœ‰æ¢è¡Œç¬¦ï¼‰ï¼Œå¦åˆ™è¿”å›nullã€‚
+		 * 		å…¶ä»–æ¨¡å¼ä¸‹ï¼Œè¿”å›nullã€‚
 		 */
 		
 		if (checkMode_(READ) && !isEnd()) {
@@ -187,11 +187,11 @@ public class TextManager {
 	public String getContent() {
 		/**
 		 * 
-		 * 	¶ÁÈ¡ËùÓĞÎÄ¼şÄÚÈİ¡£
+		 * 	è¯»å–æ‰€æœ‰æ–‡ä»¶å†…å®¹ã€‚
 		 * 
 		 * Returns: 
-		 * 		READ»òDEFAULTÄ£Ê½ÏÂ£¬·µ»ØÎÄ¼şµÄÄÚÈİ¡£
-		 * 		ÆäËûÄ£Ê½ÏÂ£¬·µ»Ønull¡£
+		 * 		READæˆ–DEFAULTæ¨¡å¼ä¸‹ï¼Œè¿”å›æ–‡ä»¶çš„å†…å®¹ã€‚
+		 * 		å…¶ä»–æ¨¡å¼ä¸‹ï¼Œè¿”å›nullã€‚
 		 */
 		
 		if (checkMode_(READ))
@@ -202,8 +202,8 @@ public class TextManager {
 		/**
 		 * 12/21 Ver0.0.1
 		 * 
-		 * 	ÖØÖÃ´ËTextManager£¬Óë³õÊ¼»¯Íê³Éºó×´Ì¬ÏàÍ¬¡£
-		 * 		µÈĞ§ÓÚreset(0)
+		 * 	é‡ç½®æ­¤TextManagerï¼Œä¸åˆå§‹åŒ–å®ŒæˆåçŠ¶æ€ç›¸åŒã€‚
+		 * 		ç­‰æ•ˆäºreset(0)
 		 */
 		
 		if (checkMode_(READ))cursor = -1;
@@ -212,13 +212,13 @@ public class TextManager {
 		/**
 		 * 12/21 Ver0.0.1
 		 * 
-		 * 	½«TextManagerµÄ¹â±êÒÆÖÁindex´¦£¬ÏÂÒ»´Îµ÷ÓÃreadLine()½«¶ÁÈ¡¸ÃĞĞÄÚÈİ¡£
+		 * 	å°†TextManagerçš„å…‰æ ‡ç§»è‡³indexå¤„ï¼Œä¸‹ä¸€æ¬¡è°ƒç”¨readLine()å°†è¯»å–è¯¥è¡Œå†…å®¹ã€‚
 		 * 
 		 * Parameter:
-		 * 		index - ÏÂÒ»´Î¶ÁÈ¡Ï£ÍûµÃµ½µÄĞĞË÷Òı£¬·¶Î§Îª0µ½×ÜĞĞÊı-1£¨°üÀ¨Á½¶Ë£©¡£
+		 * 		index - ä¸‹ä¸€æ¬¡è¯»å–å¸Œæœ›å¾—åˆ°çš„è¡Œç´¢å¼•ï¼ŒèŒƒå›´ä¸º0åˆ°æ€»è¡Œæ•°-1ï¼ˆåŒ…æ‹¬ä¸¤ç«¯ï¼‰ã€‚
 		 * 
 		 * Throws:
-		 * 		IllegalArgumentException: index²»·ûºÏÔ¤ÆÚµÄ·¶Î§¡£
+		 * 		IllegalArgumentException: indexä¸ç¬¦åˆé¢„æœŸçš„èŒƒå›´ã€‚
 		 */
 		
 		if (checkMode_(READ))

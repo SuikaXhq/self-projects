@@ -1,6 +1,6 @@
 /*
- * ËãÌıËã·¨²âÊÔÆ÷
- * ***ÒÑ·ÏÆú***
+ * ç®—å¬ç®—æ³•æµ‹è¯•å™¨
+ * ***å·²åºŸå¼ƒ***
  */
 
 
@@ -30,9 +30,9 @@ class MjTester
 						}
 						if (!TenPaiCalculator.getTenPai(new Hand(hand)).isEmpty())
 						{
-							System.out.println("¥Æ¥ó¥Ñ¥¤£º" + TenPaiCalculator.getTenPai(new Hand(hand)));
+							System.out.println("ãƒ†ãƒ³ãƒ‘ã‚¤ï¼š" + TenPaiCalculator.getTenPai(new Hand(hand)));
 						} else {
-							System.out.println("¥Î©`¥Æ¥ó");
+							System.out.println("ãƒãƒ¼ãƒ†ãƒ³");
 						}
 						continue;
 					}
@@ -40,9 +40,9 @@ class MjTester
 					System.out.println(mjm.getHand());
 					if (!TenPaiCalculator.getTenPai(mjm.getHand()).isEmpty())
 					{
-						System.out.println("¥Æ¥ó¥Ñ¥¤£º" + TenPaiCalculator.getTenPai(mjm.getHand()));
+						System.out.println("ãƒ†ãƒ³ãƒ‘ã‚¤ï¼š" + TenPaiCalculator.getTenPai(mjm.getHand()));
 					} else {
-						System.out.println("¥Î©`¥Æ¥ó");
+						System.out.println("ãƒãƒ¼ãƒ†ãƒ³");
 					}
 				} else {
 					System.exit(0);

@@ -6,7 +6,7 @@ public class LogPreparer
 {
 	File file_;
 	BufferedReader reader_;
-	StringBuffer content_;//LogÄÚÈİ
+	StringBuffer content_;//Logå†…å®¹
 	
 	public LogPreparer(File file) {
 		try {

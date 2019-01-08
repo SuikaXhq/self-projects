@@ -1,14 +1,14 @@
 /**
  * Class SuvietLauncher
  * Version 0.0.3
- * Feature: ÊäÈë²éÕÒµÄ´Ê£¬·µ»Ø´ÎÊı¡¢ÏûÏ¢×ÜÊı¼°Ã¿¸öÈËµÄÏêÏ¸Çé¿ö
+ * Feature: è¾“å…¥æŸ¥æ‰¾çš„è¯ï¼Œè¿”å›æ¬¡æ•°ã€æ¶ˆæ¯æ€»æ•°åŠæ¯ä¸ªäººçš„è¯¦ç»†æƒ…å†µ
  * 
  * Ver0.0.3 12/23 Updated:
- * 		- ¼ÓÈë¾»·¢ÑÔÊıµÄ·µ»ØÖµ
+ * 		- åŠ å…¥å‡€å‘è¨€æ•°çš„è¿”å›å€¼
  * 
  * Ver0.0.2 12/21 Updated:
- * 		- Ö§³ÖÇĞ»»ÎÄ¼ş
- * 		- ¸üĞÂUI
+ * 		- æ”¯æŒåˆ‡æ¢æ–‡ä»¶
+ * 		- æ›´æ–°UI
  */
 
 package xhq.suviet;
@@ -34,7 +34,7 @@ public class SuvietLauncher {
 	}
 	
 	private void init() {
-		//Ñ¡Ôñ¶ÁÈ¡ÎÄ¼ş
+		//é€‰æ‹©è¯»å–æ–‡ä»¶
 		fileChooser_.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fileChooser_.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
 		if (JFileChooser.APPROVE_OPTION == fileChooser_.showOpenDialog(frame_)) {
@@ -51,7 +51,7 @@ public class SuvietLauncher {
 		
 		
 		try {
-			String finding = JOptionPane.showInputDialog("Çë¼üÈë²éÕÒµÄ´Ê¡£");
+			String finding = JOptionPane.showInputDialog("è¯·é”®å…¥æŸ¥æ‰¾çš„è¯ã€‚");
 			if (finding == null || finding.equals(""))return;
 			
 			long startTime = System.currentTimeMillis();
@@ -62,17 +62,17 @@ public class SuvietLauncher {
 			frame_.clearText();
 			if (analyzer_.getMode() == LogAnalyzer.DATE_MODE) {
 				String[] dateRange = analyzer_.getDateRange();
-				frame_.addText("´Ó" + dateRange[0] + "µ½" + dateRange[1] + "µÄËÑË÷½á¹û£º\n");
+				frame_.addText("ä»" + dateRange[0] + "åˆ°" + dateRange[1] + "çš„æœç´¢ç»“æœï¼š\n");
 			}
 			
-			String resultStr = "²éÕÒ×Ö£º" + finding + "\n½á¹û£º\n";
+			String resultStr = "æŸ¥æ‰¾å­—ï¼š" + finding + "\nç»“æœï¼š\n";
 			resultStr += "shm: " + result[0][0] + " / " + result[2][0] + " / " + result[1][0] + "\n";
 			resultStr += "sjx: " + result[0][1] + " / " + result[2][1] + " / " + result[1][1] + "\n";
 			resultStr += "nhx: " + result[0][2] + " / " + result[2][2] + " / " + result[1][2] + "\n";
 			resultStr += "xhq: " + result[0][3] + " / " + result[2][3] + " / " + result[1][3] + "\n";
 			resultStr += "njh: " + result[0][4] + " / " + result[2][4] + " / " + result[1][4] + "\n";
 			resultStr += "ycx: " + result[0][5] + " / " + result[2][5] + " / " + result[1][5] + "\n";
-			resultStr += "×Ü¼Æ" + result[3][0] + "ÌõÏûÏ¢¡£\nÓÃÊ±£º" + (stopTime - startTime) + "ms¡£";
+			resultStr += "æ€»è®¡" + result[3][0] + "æ¡æ¶ˆæ¯ã€‚\nç”¨æ—¶ï¼š" + (stopTime - startTime) + "msã€‚";
 			frame_.addText(resultStr);
 			
 		} catch (Exception e) {
@@ -107,7 +107,7 @@ public class SuvietLauncher {
 		private JTextField dayTo = new JTextField();
 		
 		DateSettingFrame() {
-			super("ÉèÖÃÈÕÆÚ·¶Î§");
+			super("è®¾ç½®æ—¥æœŸèŒƒå›´");
 			setIconImage(icon_.getImage());
 			
 			Calendar dateNow = Calendar.getInstance();
@@ -115,20 +115,20 @@ public class SuvietLauncher {
 			monthTo.setText(String.valueOf(dateNow.get(Calendar.MONTH) + 1));
 			dayTo.setText(String.valueOf(dateNow.get(Calendar.DATE)));
 			
-			Box centerBox = new Box(BoxLayout.Y_AXIS);//Ö÷Box
-			Box fromBox = new Box(BoxLayout.X_AXIS);//ÈÕÆÚÆğÊ¼Box
-			Box toBox = new Box(BoxLayout.X_AXIS);//ÈÕÆÚ½áÊøBox
-			Box buttonBox = new Box(BoxLayout.X_AXIS);//°´Å¥Box
-			JLabel label1 = new JLabel("´Ó£º");
-			JLabel label2 = new JLabel("µ½£º");
-			JLabel label3 = new JLabel("Äê");
-			JLabel label4 = new JLabel("ÔÂ");
-			JLabel label5 = new JLabel("ÈÕ");
-			JLabel label6 = new JLabel("Äê");
-			JLabel label7 = new JLabel("ÔÂ");
-			JLabel label8 = new JLabel("ÈÕ");
-			JButton yesButton = new JButton("È·¶¨");
-			JButton cancelButton = new JButton("È¡Ïû");
+			Box centerBox = new Box(BoxLayout.Y_AXIS);//ä¸»Box
+			Box fromBox = new Box(BoxLayout.X_AXIS);//æ—¥æœŸèµ·å§‹Box
+			Box toBox = new Box(BoxLayout.X_AXIS);//æ—¥æœŸç»“æŸBox
+			Box buttonBox = new Box(BoxLayout.X_AXIS);//æŒ‰é’®Box
+			JLabel label1 = new JLabel("ä»ï¼š");
+			JLabel label2 = new JLabel("åˆ°ï¼š");
+			JLabel label3 = new JLabel("å¹´");
+			JLabel label4 = new JLabel("æœˆ");
+			JLabel label5 = new JLabel("æ—¥");
+			JLabel label6 = new JLabel("å¹´");
+			JLabel label7 = new JLabel("æœˆ");
+			JLabel label8 = new JLabel("æ—¥");
+			JButton yesButton = new JButton("ç¡®å®š");
+			JButton cancelButton = new JButton("å–æ¶ˆ");
 			
 			yesButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -172,14 +172,14 @@ public class SuvietLauncher {
 		private JTextArea textArea_ = new JTextArea();
 		
 		ShowFrame(SuvietLauncher l) {
-			super("ËÕ¹²ÖĞÑë»áÒé×ÊÁÏ´¦Àí");
+			super("è‹å…±ä¸­å¤®ä¼šè®®èµ„æ–™å¤„ç†");
 			JPanel panel = new JPanel();
-			JButton nextButton = new JButton("¼ÌĞø");
+			JButton nextButton = new JButton("ç»§ç»­");
 			
 			JMenuBar menuBar = new JMenuBar();
-			JMenu fileMenu = new JMenu("ÎÄ¼ş");
-			JMenuItem changeFileOption = new JMenuItem("¸ü¸Ä");
-//			JMenuItem openFileOption = new JMenuItem("´ò¿ª");
+			JMenu fileMenu = new JMenu("æ–‡ä»¶");
+			JMenuItem changeFileOption = new JMenuItem("æ›´æ”¹");
+//			JMenuItem openFileOption = new JMenuItem("æ‰“å¼€");
 			menuBar.add(fileMenu);
 			fileMenu.add(changeFileOption);
 //			fileMenu.add(openFileOption);
@@ -191,10 +191,10 @@ public class SuvietLauncher {
 				public void actionPerformed(ActionEvent e) {l.changeFile();}
 			});
 			
-			JMenu configMenu = new JMenu("ÉèÖÃ");
-			JMenuItem dateSettingOption = new JMenuItem("ÉèÖÃÈÕÆÚ·¶Î§");
-			JMenu modeMenu = new JMenu("ÉèÖÃÄ£Ê½");
-			JMenuItem defaultOption = new JMenuItem("ÉèÖÃÎªÄ¬ÈÏÄ£Ê½");
+			JMenu configMenu = new JMenu("è®¾ç½®");
+			JMenuItem dateSettingOption = new JMenuItem("è®¾ç½®æ—¥æœŸèŒƒå›´");
+			JMenu modeMenu = new JMenu("è®¾ç½®æ¨¡å¼");
+			JMenuItem defaultOption = new JMenuItem("è®¾ç½®ä¸ºé»˜è®¤æ¨¡å¼");
 			menuBar.add(configMenu);
 			configMenu.add(modeMenu);
 			configMenu.add(dateSettingOption);

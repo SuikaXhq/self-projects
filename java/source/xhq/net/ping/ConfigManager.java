@@ -16,7 +16,7 @@ public class ConfigManager
 	private File res_;
 //	private ArrayList<String> outputStrings_ = new ArrayList<String>();
 
-	//txtÎÄ¼şÎ»ÓÚjar°üÍ¬Ä¿Â¼ÏÂres/DefaultIp.txt
+	//txtæ–‡ä»¶ä½äºjaråŒ…åŒç›®å½•ä¸‹res/DefaultIp.txt
 	public ConfigManager() throws Exception {
 		String path1 = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 		String path2 = path1.substring(1,path1.lastIndexOf("/")) + "/res";
@@ -29,33 +29,33 @@ public class ConfigManager
 	}
 
 /*
-	//Ìæ»»ËùÓĞ
+	//æ›¿æ¢æ‰€æœ‰
 	public void changeAll(ArrayList<String> arr) {
 		outputStrings_ = arr;
 	}
 
-	//Ìæ»»Ò»ĞĞ
+	//æ›¿æ¢ä¸€è¡Œ
 	public void changeLine(int index, String content) {
 		if (index < outputStrings_.size())
 			outputStrings_.set(index,content);
 	}
 
-	//Ìí¼ÓÒ»ĞĞ
+	//æ·»åŠ ä¸€è¡Œ
 	public void append(String content) {
 		outputStrings_.add(content);
 	}
 */
 
-	//Ğ´Èë
+	//å†™å…¥
 	public void write(ArrayList<String> arr) throws IOException {
 		writer_ = new BufferedWriter(new FileWriter(file_));
 		for (int i = 0;i < arr.size();i++)
-			writer_.write((i + 1) + ":\t" + arr.get(i) + "\r\n");//Êä³öconfig¸ñÊ½
+			writer_.write((i + 1) + ":\t" + arr.get(i) + "\r\n");//è¾“å‡ºconfigæ ¼å¼
 		writer_.flush();
 		writer_.close();
 	}
 
-	//¶ÁÈ¡
+	//è¯»å–
 	public ArrayList<String> readAll() throws IOException {
 		ArrayList<String> inputStrings_ = new ArrayList<String>();
 		if (!file_.createNewFile()) {
@@ -66,13 +66,13 @@ public class ConfigManager
 			configMatcher_ = CONFIG_PATTERN.matcher("");
 			iPMatcher_ = IP_PATTERN.matcher("");
 			while ((newString = reader_.readLine()) != null) {
-				configMatcher_ = configMatcher_.reset(newString);//²éÕÒconfig¸ñÊ½£¬ÕÒ²»µ½ÔòÊÓÎªÎŞ¹ØÄÚÈİ£¬Óë¿ÕÎÄ¼şÒ»Ñù¶Ô´ı
+				configMatcher_ = configMatcher_.reset(newString);//æŸ¥æ‰¾configæ ¼å¼ï¼Œæ‰¾ä¸åˆ°åˆ™è§†ä¸ºæ— å…³å†…å®¹ï¼Œä¸ç©ºæ–‡ä»¶ä¸€æ ·å¯¹å¾…
 				if (configMatcher_.find()) {
 					left = configMatcher_.end();
-					iPMatcher_ = iPMatcher_.reset(newString);//²éÕÒIP£¬ÕÒ²»µ½ºÏ·¨ÓòÃûÔòÓÃ¿Õ×Ö·û´®´úÌæ
+					iPMatcher_ = iPMatcher_.reset(newString);//æŸ¥æ‰¾IPï¼Œæ‰¾ä¸åˆ°åˆæ³•åŸŸååˆ™ç”¨ç©ºå­—ç¬¦ä¸²ä»£æ›¿
 					if (iPMatcher_.find(left)) {
 						right = iPMatcher_.end();
-						inputStrings_.add(newString.substring(left, right));//½ö´æ´¢IP
+						inputStrings_.add(newString.substring(left, right));//ä»…å­˜å‚¨IP
 					} else {
 						inputStrings_.add("");
 					}
@@ -87,19 +87,19 @@ public class ConfigManager
 		return inputStrings_;
 	}
 
-	//IP¸ñÊ½ÅĞ¶ÏÆ÷
+	//IPæ ¼å¼åˆ¤æ–­å™¨
 	public boolean isIP(String ip) {
 		iPMatcher_.reset(ip);
 		return iPMatcher_.find();
 	}
 
 /*
-	//¹Ø±ÕÊä³öÁ÷
+	//å…³é—­è¾“å‡ºæµ
 	public void closeWriter() throws IOException {
 		writer_.close();
 	}
 
-	//¹Ø±ÕÊäÈëÁ÷
+	//å…³é—­è¾“å…¥æµ
 	public void closeReader() throws IOException {
 		reader_.close();
 	}

@@ -11,18 +11,18 @@ import java.text.*;
 public class IPBox
 {
 	public final static DecimalFormat FORMAT = new DecimalFormat("0.00%");
-	private Box backBox_;//IPBoxÄ¸Ìåbox
-	private Pinger pinger_;//PingÆ÷
-	private JLabel lossRateLabel_;//¶ª°üÂÊ°Ù·Ö±È±êÇ©
-	private JTextArea resultArea_;//Ó¦´ğĞĞÇøÓò
-	private JTextField ipField_;//IPÊäÈëÇø
+	private Box backBox_;//IPBoxæ¯ä½“box
+	private Pinger pinger_;//Pingå™¨
+	private JLabel lossRateLabel_;//ä¸¢åŒ…ç‡ç™¾åˆ†æ¯”æ ‡ç­¾
+	private JTextArea resultArea_;//åº”ç­”è¡ŒåŒºåŸŸ
+	private JTextField ipField_;//IPè¾“å…¥åŒº
 	private boolean isIPFieldChanged_ = false;
 	private JButton startButton_;
 	private JButton stopButton_;
 	private JButton deleteButton_;
-	private Double receive_ = 0.0;//ÏìÓ¦Êı
-	private Double send_ = 0.0;//·¢ËÍÊı
-	private java.util.Timer timer_ = new java.util.Timer();//ping¼ÆÊ±Æ÷
+	private Double receive_ = 0.0;//å“åº”æ•°
+	private Double send_ = 0.0;//å‘é€æ•°
+	private java.util.Timer timer_ = new java.util.Timer();//pingè®¡æ—¶å™¨
 	private String tempResult_;
 	private Matcher resultMatcher_;
 	private TimerTask timerTask_;
@@ -30,7 +30,7 @@ public class IPBox
 	public IPBox(String defaultIP) {
 		pinger_ = new Pinger(defaultIP);
 
-		//³õÊ¼»¯ÔªËØ
+		//åˆå§‹åŒ–å…ƒç´ 
 		lossRateLabel_ = new JLabel("0.00%");
 		resultArea_ = new JTextArea();
 		resultArea_.setEditable(false);
@@ -46,11 +46,11 @@ public class IPBox
 				if (!isIPFieldChanged_)
 					isIPFieldChanged_ = true;
 			}
-		});//ip±ä¸üÍ¨Öª
-		startButton_ = new JButton("¿ªÊ¼");
-		stopButton_ = new JButton("Í£Ö¹");
+		});//ipå˜æ›´é€šçŸ¥
+		startButton_ = new JButton("å¼€å§‹");
+		stopButton_ = new JButton("åœæ­¢");
 		stopButton_.setEnabled(false);
-		deleteButton_ = new JButton("É¾³ı");
+		deleteButton_ = new JButton("åˆ é™¤");
 
 		resultMatcher_ = Pinger.RESPONSE_PATTERN.matcher("");
 
@@ -59,19 +59,19 @@ public class IPBox
 		jsp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		jsp.setPreferredSize(new Dimension(350,200));
-		//ÓÅ»¯½çÃæ
+		//ä¼˜åŒ–ç•Œé¢
 		
-		Box upBox = new Box(BoxLayout.X_AXIS);//IPÊäÈëÇø
-		Box midBox = new Box(BoxLayout.X_AXIS);//¶ª°üÂÊÇø
-		Box downBox = new Box(BoxLayout.X_AXIS);//°´Å¥Çø
-		Box underBox = new Box(BoxLayout.X_AXIS);//É¾³ı¼üÇø
+		Box upBox = new Box(BoxLayout.X_AXIS);//IPè¾“å…¥åŒº
+		Box midBox = new Box(BoxLayout.X_AXIS);//ä¸¢åŒ…ç‡åŒº
+		Box downBox = new Box(BoxLayout.X_AXIS);//æŒ‰é’®åŒº
+		Box underBox = new Box(BoxLayout.X_AXIS);//åˆ é™¤é”®åŒº
 		upBox.setPreferredSize(new Dimension(350,20));
 		midBox.setPreferredSize(new Dimension(350,20));
 		downBox.setPreferredSize(new Dimension(350,30));
 		underBox.setPreferredSize(new Dimension(350,30));
 		upBox.add(new JLabel("IP:"));
 		upBox.add(ipField_);
-		midBox.add(new JLabel("¶ª°üÂÊ£º"));
+		midBox.add(new JLabel("ä¸¢åŒ…ç‡ï¼š"));
 		midBox.add(lossRateLabel_);
 		downBox.add(startButton_);
 		downBox.add(stopButton_);
@@ -83,10 +83,10 @@ public class IPBox
 		backBox_.add(downBox);
 		backBox_.add(jsp);
 		backBox_.add(underBox);
-		//¹¹ÔìUI
+		//æ„é€ UI
 	}
 
-//³ÉÔ±±äÁ¿·â×°
+//æˆå‘˜å˜é‡å°è£…
 	public boolean isIPFieldChanged() {
 		return isIPFieldChanged_;
 	}
@@ -112,7 +112,7 @@ public class IPBox
 		return deleteButton_.getActionListeners()[0];
 	}
 
-//ping·½·¨
+//pingæ–¹æ³•
 	public void startPing() {
 		clear();
 		resultArea_.setText("");
@@ -128,7 +128,7 @@ public class IPBox
 		stopButton_.setEnabled(false);
 	}
 
-//Ìí¼ÓÕìÌı·½·¨
+//æ·»åŠ ä¾¦å¬æ–¹æ³•
 	public void addStartListener(ActionListener actionListener) {
 		startButton_.addActionListener(actionListener);
 	}
@@ -139,7 +139,7 @@ public class IPBox
 		deleteButton_.addActionListener(actionListener);
 	}
 
-//ÅĞ¶ÏIPÊÇ·ñ±ä¸ü
+//åˆ¤æ–­IPæ˜¯å¦å˜æ›´
 	private void turnOff_() {
 		isIPFieldChanged_ = false;
 	}
@@ -152,13 +152,13 @@ public class IPBox
 		send_ = 0.0;
 	}
 
-//¹Ø±Õ
+//å…³é—­
 	public void close() {
 		timer_.cancel();
 		timerTask_ = null;
 	}
 
-//¶¨Ê±ping²Ù×÷
+//å®šæ—¶pingæ“ä½œ
 	private class PingTask extends TimerTask
 	{
 		public void run() {

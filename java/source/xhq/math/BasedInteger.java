@@ -1,7 +1,7 @@
 /*
- * 含进制转换的长整型类
- * 未实现：minus(), multiply(), divide(), mod()
- * 未解决：高于十进制下的toString()
+ * 鍚繘鍒惰浆鎹㈢殑闀挎暣鍨嬬被
+ * 鏈疄鐜帮細minus(), multiply(), divide(), mod()
+ * 鏈В鍐筹細楂樹簬鍗佽繘鍒朵笅鐨則oString()
  */
 
 package xhq.math;

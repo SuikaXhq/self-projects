@@ -9,7 +9,7 @@ public class PaiValue {
 	public static final Set 
 
 	public PaiPattern() {
-		// TODO ×Ô¶¯Éú³ÉµÄ¹¹Ôìº¯Êı´æ¸ù
+		// TODO è‡ªåŠ¨ç”Ÿæˆçš„æ„é€ å‡½æ•°å­˜æ ¹
 	}
 
 }

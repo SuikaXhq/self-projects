@@ -4,7 +4,7 @@ public class ValueAnalyzer {
 	private int numOfTriples;
 
 	public ValueAnalyzer() {
-		// TODO ×Ô¶¯Éú³ÉµÄ¹¹Ôìº¯Êı´æ¸ù
+		// TODO è‡ªåŠ¨ç”Ÿæˆçš„æ„é€ å‡½æ•°å­˜æ ¹
 	}
 
 }

@@ -49,12 +49,12 @@ public class TenPaiCalculator
 							pairs.add(j);
 						}
 					}
-					if (numPair == 7)//Æß¶ÔÅĞ¶Ï
+					if (numPair == 7)//ä¸ƒå¯¹åˆ¤æ–­
 					{
 						temp = new Hand(tempHand.getHand());
 						if (judge(temp))
 						{
-							//Á½±­¿Ú
+							//ä¸¤æ¯å£
 						}
 						result[p-1] = true;
 						tempHand.del(p);
