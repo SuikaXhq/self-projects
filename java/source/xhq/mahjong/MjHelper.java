@@ -1,3 +1,7 @@
+/**
+ * TODO: 统计及统计frame
+ */
+
 package xhq.mahjong;
 
 import javax.swing.*;
@@ -5,6 +9,7 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
+import xhq.common.*;
 
 public class MjHelper
 {
@@ -61,7 +66,9 @@ public class MjHelper
 		JMenuBar mb = new JMenuBar();
 		JMenu helpMenu = new JMenu("帮助");
 		JMenuItem help = new JMenuItem("游戏帮助");
+		JMenuItem statistics = new JMenuItem("统计");
 		helpMenu.add(help);
+		helpMenu.add(statistics);
 		help.addActionListener(new HelpListener());//游戏帮助菜单
 		surface[0] = new JMenuItem("筒");
 		surface[1] = new JMenuItem("万");
@@ -381,6 +388,7 @@ public class MjHelper
 					for (int i = 0;i < 9;i++)
 					{
 						if (answer[i])
+							buttons[i].setEnabled(true);
 							answerListener[i].refresh();//还原按钮
 					}
 					buttonPanel.remove(nextButton);
@@ -403,6 +411,17 @@ public class MjHelper
 			setBounds(600,400,400,150);
 			setResizable(false);
 			JLabel jl = new JLabel("<html><body>上部：手牌<br>中部：选择你认为的听牌（未听则不选择）或输入手牌<br>快捷键为alt+数字/字母<body></html>");
+			getContentPane().add(jl);
+		}
+	}
+	
+	public class StatisticsFrame extends JFrame
+	{
+		public StatisticsFrame(String title) {
+			super(title);
+			setBounds(550, 350, 400, 150);
+			setResizable(false);
+			JLabel jl = new JLabel();
 			getContentPane().add(jl);
 		}
 	}

@@ -36,7 +36,7 @@ public class SuvietLauncher {
 	private void init() {
 		//选择读取文件
 		fileChooser_.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fileChooser_.setFileFilter(new FileNameExtensionFilter("Text files", "txt"));
+		fileChooser_.setFileFilter(new FileNameExtensionFilter("QQ Text files", "txt"));
 		if (JFileChooser.APPROVE_OPTION == fileChooser_.showOpenDialog(frame_)) {
 			file_ = fileChooser_.getSelectedFile();
 			nextAnalyze();

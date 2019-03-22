@@ -10,3 +10,12 @@ resource/
 /.classpath
 
 /.project
+
+#python
+/python/**/*.jpg
+*.bat
+*.txt
+*.ini
+*.html
+*.rar
+*.json
