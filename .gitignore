@@ -19,3 +19,5 @@ resource/
 *.html
 *.rar
 *.json
+*.png
+*.pyc
